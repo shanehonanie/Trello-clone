@@ -124,6 +124,14 @@ public class ProjectTask {
         this.update_At = update_At;
     }
 
+    public Backlog getBacklog() {
+        return backlog;
+    }
+
+    public void setBacklog(Backlog backlog) {
+        this.backlog = backlog;
+    }
+
     @Override
     public String toString() {
         return "ProjectTask{" +
