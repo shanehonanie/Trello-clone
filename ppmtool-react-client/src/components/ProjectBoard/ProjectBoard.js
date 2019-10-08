@@ -7,14 +7,53 @@ import Backlog from './Backlog';
 import { getBacklog } from '../../actions/backlogActions';
 
 class ProjectBoard extends Component {
+	constructor() {
+		super();
+
+		this.state = {
+			errors: {}
+		};
+	}
+
 	componentDidMount() {
 		const { id } = this.props.match.params;
 		this.props.getBacklog(id);
 	}
 
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.errors) {
+			this.setState({ errors: nextProps.errors });
+		}
+	}
+
 	render() {
 		const { id } = this.props.match.params;
 		const { projectTasks } = this.props.backlog;
+		const { errors } = this.state;
+
+		let boardContent;
+
+		const boardAlgorithm = (errors, projectTasks) => {
+			if (projectTasks.length === 0) {
+				if (errors.projectNotFound) {
+					return (
+						<div className='alert alert-danger text-center' role='alert'>
+							{errors.projectNotFound}
+						</div>
+					);
+				} else {
+					return (
+						<div className='alert alert-info text-center' role='alert'>
+							No Project Tasks on this board
+						</div>
+					);
+				}
+			} else {
+				return <Backlog projectTasks={projectTasks} />;
+			}
+		};
+
+		boardContent = boardAlgorithm(errors, projectTasks);
 
 		return (
 			<div className='container'>
@@ -23,7 +62,7 @@ class ProjectBoard extends Component {
 				</Link>
 				<br />
 				<hr />
-				<Backlog projectTasks={projectTasks} />
+				{boardContent}
 			</div>
 		);
 	}
@@ -31,11 +70,13 @@ class ProjectBoard extends Component {
 
 ProjectBoard.propTypes = {
 	backlog: PropTypes.object.isRequired,
-	getBacklog: PropTypes.func.isRequired
+	getBacklog: PropTypes.func.isRequired,
+	errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-	backlog: state.backlog
+	backlog: state.backlog,
+	errors: state.errors
 });
 
 export default connect(
