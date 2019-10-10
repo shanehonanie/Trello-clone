@@ -15,7 +15,7 @@ class Backlog extends Component {
 		let doneItems = [];
 
 		for (let i = 0; i < tasks.length; i++) {
-			console.log(tasks[i]);
+			// console.log(tasks[i]);
 
 			if (tasks[i].props.projectTask.status === 'TODO') {
 				todoItems.push(tasks[i]);
@@ -36,7 +36,7 @@ class Backlog extends Component {
 					<div className='col-md-4'>
 						<div className='card text-center mb-2'>
 							<div className='card-header bg-secondary text-white'>
-								<h3>TO DO</h3>
+								<h3>TODO</h3>
 							</div>
 						</div>
 						{todoItems}
