@@ -1,6 +1,7 @@
 package io.agileintelligence.ppmtool.security;
 
 import io.agileintelligence.ppmtool.domain.User;
+import io.agileintelligence.ppmtool.exceptions.UsernameAlreadyExistsException;
 import io.agileintelligence.ppmtool.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,14 +16,19 @@ public class UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public User saveUser(User newUser) {
-        newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
+        try {
+            newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
 
-        // username has to be unique
+            // username has to be unique
+            newUser.setUsername(newUser.getUsername());
 
-        // password & confirm password match
+            // password & confirm password match
 
-        // Dont persist or show confirm password
+            // Dont persist or show confirm password
 
-        return userRepository.save(newUser);
+            return userRepository.save(newUser);
+        }catch (Exception e) {
+            throw new UsernameAlreadyExistsException("Username " + newUser.getUsername() + " already exists");
+        }
     }
 }
