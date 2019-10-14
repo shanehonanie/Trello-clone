@@ -22,9 +22,8 @@ public class UserService {
             // username has to be unique
             newUser.setUsername(newUser.getUsername());
 
-            // password & confirm password match
-
             // Dont persist or show confirm password
+            newUser.setConfirmPassword("");
 
             return userRepository.save(newUser);
         }catch (Exception e) {
