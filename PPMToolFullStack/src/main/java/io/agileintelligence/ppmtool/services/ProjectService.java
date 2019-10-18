@@ -4,6 +4,7 @@ import io.agileintelligence.ppmtool.domain.Backlog;
 import io.agileintelligence.ppmtool.domain.Project;
 import io.agileintelligence.ppmtool.domain.User;
 import io.agileintelligence.ppmtool.exceptions.ProjectIdException;
+import io.agileintelligence.ppmtool.exceptions.ProjectNotFoundException;
 import io.agileintelligence.ppmtool.repositories.BacklogRepository;
 import io.agileintelligence.ppmtool.repositories.ProjectRepository;
 import io.agileintelligence.ppmtool.repositories.UserRepository;
@@ -46,25 +47,26 @@ public class ProjectService {
         }
     }
 
-    public Project findProjectByIdentifier(String projectId) {
+    public Project findProjectByIdentifier(String projectId, String username) {
         Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase());
 
         if(project == null)
             throw new ProjectIdException("Project does not exist");
 
+        if(!project.getProjectLeader().equals(username)) {
+            throw new ProjectNotFoundException("Project not found in your account");
+        }
+
         return project;
     }
 
-    public Iterable<Project> findAllProjects() {
-        return projectRepository.findAll();
+    public Iterable<Project> findAllProjects(String username) {
+        return projectRepository.findAllByProjectLeader(username);
     }
 
-    public void deleteProjectByIdentifier(String projectId) {
-        Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase());
+    public void deleteProjectByIdentifier(String projectId, String username) {
 
-        if(project == null)
-            throw new ProjectIdException("Cannot Delete project with ID " + projectId.toUpperCase() + ". This project does not exist");
 
-        projectRepository.delete(project);
+        projectRepository.delete(findProjectByIdentifier(projectId, username));
     }
 }
