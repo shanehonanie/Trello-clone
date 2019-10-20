@@ -3,6 +3,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import jwt_decode from 'jwt-decode';
 
 import store from './store';
 import Dashboard from './components/Dashboard';
@@ -15,6 +16,26 @@ import AddProjectTask from './components/ProjectBoard/ProjectTasks/AddProjectTas
 import UpdateProjectTask from './components/ProjectBoard/ProjectTasks/UpdateProjectTask';
 import Register from './components/UserManagement/Register';
 import Login from './components/UserManagement/Login';
+import setJWTToken from './securityUtils/setJWTToken';
+import { SET_CURRENT_USER } from './actions/types';
+import { logout } from './actions/securityActions';
+
+const jwtToken = localStorage.jwtToken;
+
+if (jwtToken) {
+	setJWTToken(jwtToken);
+	const decoded_jwtToken = jwt_decode(jwtToken);
+	store.dispatch({
+		type: SET_CURRENT_USER,
+		payload: decoded_jwtToken
+	});
+
+	const currentTime = Date.now() / 1000;
+	if (decoded_jwtToken.exp < currentTime) {
+		store.dispatch(logout());
+		window.location.href = '/';
+	}
+}
 
 function App() {
 	return (
