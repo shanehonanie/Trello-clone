@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import jwt_decode from 'jwt-decode';
 
@@ -19,6 +19,7 @@ import Login from './components/UserManagement/Login';
 import setJWTToken from './securityUtils/setJWTToken';
 import { SET_CURRENT_USER } from './actions/types';
 import { logout } from './actions/securityActions';
+// import SecuredRoute from './securityUtils/SecureRoute';
 
 const jwtToken = localStorage.jwtToken;
 
@@ -53,16 +54,22 @@ function App() {
 					{
 						// Private Routes
 					}
-					<Route exact path='/dashboard' component={Dashboard} />
-					<Route exact path='/addProject' component={AddProject} />
-					<Route exact path='/updateProject/:id' component={UpdateProject} />
-					<Route exact path='/projectBoard/:id' component={ProjectBoard} />
-					<Route exact path='/addProjectTask/:id' component={AddProjectTask} />
-					<Route
-						exact
-						path='/updateProjectTask/:backlog_id/:pt_id'
-						component={UpdateProjectTask}
-					/>
+					<Switch>
+						<Route exact path='/dashboard' component={Dashboard} />
+						<Route exact path='/addProject' component={AddProject} />
+						<Route exact path='/updateProject/:id' component={UpdateProject} />
+						<Route exact path='/projectBoard/:id' component={ProjectBoard} />
+						<Route
+							exact
+							path='/addProjectTask/:id'
+							component={AddProjectTask}
+						/>
+						<Route
+							exact
+							path='/updateProjectTask/:backlog_id/:pt_id'
+							component={UpdateProjectTask}
+						/>
+					</Switch>
 				</div>
 			</BrowserRouter>
 		</Provider>
