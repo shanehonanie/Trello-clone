@@ -12,6 +12,7 @@ const Container = styled.div`
 	border-radius: 2px;
 	padding: 8px;
 	margin-bottom: 8px;
+	background-color: ${props => (props.isDragging ? 'lightgreen' : 'white')};
 `;
 
 class ProjectTask extends Component {
@@ -20,8 +21,6 @@ class ProjectTask extends Component {
 	};
 
 	render() {
-		console.log(this.props);
-
 		const { projectTask } = this.props;
 		let priorityString;
 		let priorityClass;
@@ -46,11 +45,12 @@ class ProjectTask extends Component {
 				draggableId={projectTask.projectSequence}
 				index={this.props.index}
 			>
-				{provided => (
+				{(provided, snapshot) => (
 					<Container
 						{...provided.draggableProps}
 						{...provided.dragHandleProps}
 						ref={provided.innerRef}
+						isDragging={snapshot.isDragging}
 					>
 						<div className='card mb-1 bg-light'>
 							<div className={`card-header text-primary ${priorityClass}`}>

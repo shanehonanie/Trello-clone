@@ -34,6 +34,7 @@ class ProjectBoard extends Component {
 		let boardContent;
 
 		const boardAlgorithm = (errors, projectTasks) => {
+			console.log('projectTasks', projectTasks);
 			if (projectTasks.length === 0) {
 				if (errors.projectNotFound) {
 					return (
@@ -85,7 +86,4 @@ const mapStateToProps = state => ({
 	errors: state.errors
 });
 
-export default connect(
-	mapStateToProps,
-	{ getBacklog }
-)(ProjectBoard);
+export default connect(mapStateToProps, { getBacklog })(ProjectBoard);

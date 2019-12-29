@@ -25,7 +25,6 @@ const TaskList = styled.div`
 
 class Column extends Component {
 	render() {
-		console.log('Column props', this.props);
 		return (
 			<Container>
 				<Title>{this.props.column.title}</Title>
