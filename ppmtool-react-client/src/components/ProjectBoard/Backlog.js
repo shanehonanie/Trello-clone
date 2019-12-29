@@ -88,22 +88,58 @@ class Backlog extends Component {
 
 		// create copy of array instead of mutating original
 		const start = this.state.columns[source.droppableId];
+		const finish = this.state.columns[destination.droppableId];
 
-		const newTaskIds = Array.from(start.taskIds);
-		newTaskIds.splice(source.index, 1); // remove one item from this index
-		newTaskIds.splice(destination.index, 0, draggableId); // insert into dest loc.
+		// move within same column
+		if (start === finish) {
+			const newTaskIds = Array.from(start.taskIds);
+			newTaskIds.splice(source.index, 1); // remove one item from this index
+			newTaskIds.splice(destination.index, 0, draggableId); // insert into dest loc.
 
-		// create a new column array with same properties + new taskIds
-		const newColumn = {
+			// create a new column array with same properties + new taskIds
+			const newColumn = {
+				...start,
+				taskIds: newTaskIds
+			};
+
+			const newState = {
+				...this.state,
+				columns: {
+					...this.state.columns, // copy column state if using multiple columns, not needed for one
+					[newColumn.id]: newColumn // copy over new column id
+				}
+			};
+
+			this.setState(newState);
+			return;
+		}
+
+		// moving between different columns
+		const startTaskIds = Array.from(start.taskIds);
+		startTaskIds.splice(source.index, 1); // remove one item from source index
+
+		// for updating start column state
+		const newStart = {
 			...start,
-			taskIds: newTaskIds
+			taskIds: startTaskIds
 		};
 
+		const finishTaskIds = Array.from(finish.taskIds);
+		finishTaskIds.splice(destination.index, 0, draggableId); // insert one into dest. loc.
+
+		// for updating destination column state
+		const newFinish = {
+			...finish,
+			taskIds: finishTaskIds
+		};
+
+		// update the columns state
 		const newState = {
 			...this.state,
 			columns: {
-				...this.state.columns, // copy column state if using multiple columns, not needed for one
-				[newColumn.id]: newColumn // copy over new column id
+				...this.state.columns,
+				[newStart.id]: newStart,
+				[newFinish.id]: newFinish
 			}
 		};
 
