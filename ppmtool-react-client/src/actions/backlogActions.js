@@ -14,7 +14,7 @@ export const addProjectTask = (
 ) => async dispatch => {
 	try {
 		await axios.post(`/api/backlog/${backlog_id}`, project_task);
-		history.push(`/projectBoard/${backlog_id}`);
+		// history.push(`/projectBoard/${backlog_id}`);
 		dispatch({
 			type: GET_ERRORS,
 			payload: {}
@@ -80,15 +80,16 @@ export const updateProjectTask = (
 };
 
 export const deleteProjectTask = (backlog_id, pt_id) => async dispatch => {
-	if (
-		window.confirm(
-			`You are deleting project task ${pt_id}, this action cannot be undone`
-		)
-	) {
-		await axios.delete(`/api/backlog/${backlog_id}/${pt_id}`);
-		dispatch({
-			type: DELETE_PROJECT_TASK,
-			payload: pt_id
-		});
-	}
+	// if (
+	// 	window.confirm(
+	// 		`You are deleting project task ${pt_id}, this action cannot be undone`
+	// 	)
+	// ) {
+	await axios.delete(`/api/backlog/${backlog_id}/${pt_id}`);
+	dispatch({
+		type: DELETE_PROJECT_TASK,
+		payload: pt_id
+	});
+
+	// }
 };
