@@ -1,19 +1,25 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Backlog from './Backlog';
-import { getBacklog } from '../../actions/backlogActions';
+import {
+	getBacklog,
+	updateProjectTask,
+	deleteProjectTask
+} from '../../actions/backlogActions';
+import AddTaskModal from './ProjectTasks/AddTaskModal';
+import UpdateTaskModal from './ProjectTasks/UpdateTaskModal';
+import DeleteTaskModal from './ProjectTasks/DeleteTaskModal';
 
 class ProjectBoard extends Component {
-	constructor() {
-		super();
-
-		this.state = {
-			errors: {}
-		};
-	}
+	state = {
+		showAddModal: false,
+		showUpdateModal: false,
+		showDeleteModal: false,
+		selectedProjectId: -1,
+		errors: {}
+	};
 
 	componentDidMount() {
 		const { id } = this.props.match.params;
@@ -26,15 +32,59 @@ class ProjectBoard extends Component {
 		}
 	}
 
+	toggleAddModal = e => {
+		console.log('toggleAddModal in ProjectBoard called');
+		this.setState({
+			showAddModal: !this.state.showAddModal
+		});
+	};
+	toggleUpdateModal = e => {
+		console.log('toggleUpdateModal in ProjectBoard called');
+		this.setState({
+			showUpdateModal: !this.state.showUpdateModal
+		});
+	};
+
+	toggleDeleteModal = e => {
+		console.log('toggleDeleteModal in ProjectBoard called');
+		this.setState({
+			showDeleteModal: !this.state.showDeleteModal
+		});
+	};
+
+	setSelectedProject = id => {
+		console.log('Project Board: id', id);
+		this.setState({ selectedProjectId: id });
+	};
+
+	onDeleteCallback = () => {
+		const { projectTasks } = this.props.backlog;
+		const selectedProject = projectTasks.find(
+			proj => proj.id === this.state.selectedProjectId
+		);
+		this.props.deleteProjectTask(
+			selectedProject.projectIdentifier,
+			selectedProject.projectSequence
+		);
+		this.toggleDeleteModal();
+	};
+
+	onUpdateCallback = updatedProjectTask => {
+		this.props.updateProjectTask(updatedProjectTask);
+		// TODO: implement toggle instead of reload page to update
+		// this.toggleUpdateModal();
+	};
+
 	render() {
-		const { id } = this.props.match.params;
+		// const { id } = this.props.match.params;
 		const { projectTasks } = this.props.backlog;
 		const { errors } = this.state;
 
 		let boardContent;
 
 		const boardAlgorithm = (errors, projectTasks) => {
-			console.log('projectTasks', projectTasks);
+			console.log('projectTasks from ProjectBoard.js', projectTasks);
+			// TODO : Remove Bootstrap Alerts
 			if (projectTasks.length === 0) {
 				if (errors.projectNotFound) {
 					return (
@@ -55,21 +105,53 @@ class ProjectBoard extends Component {
 						</div>
 					);
 				}
-			} else {
-				return <Backlog projectTasks={projectTasks} />;
 			}
+
+			return (
+				<Backlog
+					projectTasks={projectTasks}
+					setIdCallback={this.setSelectedProject}
+					toggleEditModalCallback={this.toggleUpdateModal}
+					toggleDeleteModalCallback={this.toggleDeleteModal}
+					onUpdateTaskCallback={this.onUpdateCallback}
+				/>
+			);
 		};
 
 		boardContent = boardAlgorithm(errors, projectTasks);
 
 		return (
-			<div className='container'>
-				<Link to={`/addProjectTask/${id}`} className='btn btn-primary mb-3'>
-					<i className='fas fa-plus-circle'> Create Project Task</i>
-				</Link>
-				<br />
-				<hr />
-				{boardContent}
+			<div className='container-background-blue'>
+				<div className='container-center'>
+					<AddTaskModal
+						onClose={this.toggleAddModal}
+						show={this.state.showAddModal}
+						projectId={this.props.match.params.id}
+					/>
+					<UpdateTaskModal
+						onClose={this.toggleUpdateModal}
+						show={this.state.showUpdateModal}
+						project={projectTasks.find(
+							proj => proj.id === this.state.selectedProjectId
+						)}
+						onUpdateTaskCallback={this.onUpdateCallback}
+					/>
+					<DeleteTaskModal
+						onClose={this.toggleDeleteModal}
+						show={this.state.showDeleteModal}
+						project={projectTasks.find(
+							proj => proj.id === this.state.selectedProjectId
+						)}
+						onDeleteTaskCallback={this.onDeleteCallback}
+					/>
+					<button
+						className='create-project-task-btn'
+						onClick={this.toggleAddModal}
+					>
+						<i className='fas fa-plus-circle'> Create Project Task</i>
+					</button>
+					{boardContent}
+				</div>
 			</div>
 		);
 	}
@@ -78,7 +160,8 @@ class ProjectBoard extends Component {
 ProjectBoard.propTypes = {
 	backlog: PropTypes.object.isRequired,
 	getBacklog: PropTypes.func.isRequired,
-	errors: PropTypes.object.isRequired
+	errors: PropTypes.object.isRequired,
+	deleteProjectTask: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -86,4 +169,8 @@ const mapStateToProps = state => ({
 	errors: state.errors
 });
 
-export default connect(mapStateToProps, { getBacklog })(ProjectBoard);
+export default connect(mapStateToProps, {
+	getBacklog,
+	updateProjectTask,
+	deleteProjectTask
+})(ProjectBoard);

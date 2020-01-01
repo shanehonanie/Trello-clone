@@ -1,5 +1,6 @@
 import React from 'react';
-import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.scss';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import jwt_decode from 'jwt-decode';
@@ -11,8 +12,6 @@ import Landing from './components/Layout/Landing';
 import AddProject from './components/Project/AddProject';
 import UpdateProject from './components/Project/UpdateProject';
 import ProjectBoard from './components/ProjectBoard/ProjectBoard';
-import AddProjectTask from './components/ProjectBoard/ProjectTasks/AddProjectTask';
-import UpdateProjectTask from './components/ProjectBoard/ProjectTasks/UpdateProjectTask';
 import Register from './components/UserManagement/Register';
 import Login from './components/UserManagement/Login';
 import setJWTToken from './securityUtils/setJWTToken';
@@ -41,35 +40,25 @@ function App() {
 	return (
 		<Provider store={store}>
 			<BrowserRouter>
-				<div className='App'>
-					<Header />
-					{
-						// Public Routes
-					}
+				{/* <div className='App'> */}
+				<Header />
+				{
+					// Public Routes
+				}
 
-					<Route exact path='/' component={Landing} />
-					<Route exact path='/register' component={Register} />
-					<Route exact path='/login' component={Login} />
-					{
-						// Private Routes
-					}
-					<Switch>
-						<Route exact path='/dashboard' component={Dashboard} />
-						<Route exact path='/addProject' component={AddProject} />
-						<Route exact path='/updateProject/:id' component={UpdateProject} />
-						<Route exact path='/projectBoard/:id' component={ProjectBoard} />
-						<Route
-							exact
-							path='/addProjectTask/:id'
-							component={AddProjectTask}
-						/>
-						<Route
-							exact
-							path='/updateProjectTask/:backlog_id/:pt_id'
-							component={UpdateProjectTask}
-						/>
-					</Switch>
-				</div>
+				<Route exact path='/' component={Landing} />
+				<Route exact path='/register' component={Register} />
+				<Route exact path='/login' component={Login} />
+				{
+					// Private Routes
+				}
+				<Switch>
+					<Route exact path='/dashboard' component={Dashboard} />
+					<Route exact path='/addProject' component={AddProject} />
+					<Route exact path='/updateProject/:id' component={UpdateProject} />
+					<Route exact path='/projectBoard/:id' component={ProjectBoard} />
+				</Switch>
+				{/* </div> */}
 			</BrowserRouter>
 		</Provider>
 	);

@@ -29,7 +29,7 @@ class Backlog extends Component {
 				taskIds: []
 			}
 		},
-		columnOrder: ['TODO', 'DONE', 'IN_PROGRESS']
+		columnOrder: ['TODO', 'IN_PROGRESS', 'DONE']
 	};
 
 	componentDidMount() {
@@ -71,6 +71,17 @@ class Backlog extends Component {
 			}
 		}));
 	}
+
+	onUpdateTaskStatus = (taskToUpdate, newStatus) => {
+		// Get the task id from tasks[]
+		const updatedTaskObj = this.state.tasks.find(
+			t => t.projectSequence === taskToUpdate
+		);
+
+		// Update new status and persist
+		updatedTaskObj.status = newStatus;
+		this.props.onUpdateTaskCallback(updatedTaskObj);
+	};
 
 	onDragEnd = result => {
 		const { destination, source, draggableId } = result;
@@ -114,8 +125,16 @@ class Backlog extends Component {
 			return;
 		}
 
-		// moving between different columns
+		// else : move between different columns
 		const startTaskIds = Array.from(start.taskIds);
+		// console.log('Backlog.js startTaskIds', startTaskIds);
+		// console.log('Backlog.js source.droppableId', source.droppableId);
+		// console.log('Backlog.js source.index', source.index);
+		this.onUpdateTaskStatus(
+			startTaskIds[source.index],
+			destination.droppableId
+		);
+
 		startTaskIds.splice(source.index, 1); // remove one item from source index
 
 		// for updating start column state
@@ -125,6 +144,8 @@ class Backlog extends Component {
 		};
 
 		const finishTaskIds = Array.from(finish.taskIds);
+		// console.log('Backlog.js finishTaskIds', finishTaskIds);
+		// console.log('Backlog.js destination.droppableId', destination.droppableId);
 		finishTaskIds.splice(destination.index, 0, draggableId); // insert one into dest. loc.
 
 		// for updating destination column state
@@ -167,7 +188,16 @@ class Backlog extends Component {
 							this.getTaskFromArr(taskId)
 						);
 
-						return <Column key={column.id} column={column} tasks={tasks} />;
+						return (
+							<Column
+								key={column.id}
+								column={column}
+								tasks={tasks}
+								setIdCallback={this.props.setIdCallback}
+								toggleEditModalCallback={this.props.toggleEditModalCallback}
+								toggleDeleteModalCallback={this.props.toggleDeleteModalCallback}
+							/>
+						);
 					})}
 				</Container>
 			</DragDropContext>

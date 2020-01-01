@@ -45,9 +45,10 @@ class AddProject extends Component {
 		const { errors } = this.state;
 
 		return (
+			// TODO Remove Bootstrap
 			<div>
 				<div className='project'>
-					<div className='container'>
+					<div className='container-center'>
 						<div className='row'>
 							<div className='col-md-8 m-auto'>
 								<h5 className='display-4 text-center'>Create Project form</h5>
@@ -147,7 +148,4 @@ const mapStateToProps = state => ({
 	errors: state.errors
 });
 
-export default connect(
-	mapStateToProps,
-	{ createProject }
-)(AddProject);
+export default connect(mapStateToProps, { createProject })(AddProject);

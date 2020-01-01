@@ -1,0 +1,525 @@
+:root {
+	--color-blue-1: #0079bf;
+	--color-blue-2: #026aa7;
+	--color-blue-3: #4e97c2;
+	--color-blue-4: #3588b9;
+
+	--color-blue-dark-1: #172b4d;
+
+	--color-grey-light-1: #ccc;
+	--color-grey-light-2: #ebecf0;
+	--color-grey-light-3: #f0f2f5;
+	--color-grey-light-4: #f9fafc;
+	--color-grey-light-5: #fafbfc;
+	--color-grey-dark-1: #798498;
+	--color-grey-dark-2: #3e4f6b;
+
+	--color-green-light-1: #61bd4f;
+	--color-green-light-2: #5aac44;
+
+	--primary-color: #003699;
+	--dark-color: #333333;
+	--light-color: #f4f4f4;
+	--danger-color: #dc3545;
+	--success-color: #28a745;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: inherit;
+}
+
+html {
+	font-family: 'Roboto', sans-serif;
+	box-sizing: border-box;
+	font-size: 62.5%; // 1 rem = 10px, 10px/16px = 62.5%
+}
+
+// layout
+.container-center {
+	max-width: 120rem;
+	overflow: hidden;
+	margin: 8rem auto;
+	// background-color: orangered;
+	min-height: 50rem;
+}
+
+.container-background-blue {
+	position: absolute;
+	top: 0;
+	background-color: var(--color-blue-1);
+	height: 100%;
+	width: 100%;
+	z-index: -10;
+	overflow: hidden;
+}
+
+.container-background-grey {
+	position: absolute;
+	top: 0;
+	background-color: var(--color-grey-light-4);
+	height: 100%;
+	width: 100%;
+	z-index: -10;
+	overflow: hidden;
+}
+
+// Header Not Auth
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: var(--color-blue-1);
+	font-size: 2rem;
+	padding: 1rem 2rem;
+
+	&__title {
+		color: #fff;
+	}
+
+	.nav-links {
+		display: flex;
+		align-items: center;
+
+		&__link,
+		* {
+			height: 100%;
+			margin-left: 0.5rem;
+		}
+	}
+}
+
+// Header Auth
+.header-authenticated {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: var(--color-blue-2);
+	height: 4rem;
+
+	&__left {
+		display: flex;
+		height: 100%;
+
+		&__home {
+			font-size: 1.5rem;
+			width: 4rem;
+			margin: 0.4rem;
+		}
+
+		a {
+			color: white;
+		}
+
+		&__board {
+			font-size: 1.5rem;
+			width: 10rem;
+			margin: 0.4rem 0;
+
+			&__text {
+				margin-left: 0.5rem;
+			}
+		}
+	}
+
+	&__middle {
+		&__title {
+			color: white;
+		}
+
+		a {
+			color: white;
+			text-decoration: none;
+		}
+	}
+
+	&__right {
+		display: flex;
+		height: 100%;
+		&__user {
+			font-size: 1.5rem;
+			margin: 0.4rem;
+			width: 4rem;
+		}
+	}
+}
+
+// Dashboard Project Section
+.projects-dashboard {
+	display: flex;
+	flex-direction: column;
+	// justify-content: center;
+	align-items: center;
+	&__title {
+		font-size: 3.5rem;
+	}
+
+	&__list {
+	}
+}
+
+// Create Project Task Button
+.create-project-task-btn {
+	display: inline-block;
+	text-decoration: none;
+	color: var(--color-grey-light-2);
+	background-color: var(--color-blue-1);
+	padding: 0.5rem;
+	margin-bottom: 2rem;
+	margin-left: 1rem;
+	font-size: 1.5rem;
+	border: 3px solid var(--color-grey-light-2);
+	border-radius: 5px;
+
+	&:hover {
+		color: black;
+	}
+}
+
+a {
+	text-decoration: none;
+}
+// Project Item Card
+.project-card {
+	display: flex;
+	justify-content: space-between;
+	width: 700px;
+	min-height: 100px;
+	background-color: var(--color-blue-2);
+	color: #fff;
+	margin: 3rem 0;
+	cursor: pointer;
+
+	&:hover {
+		background-color: var(--color-blue-4);
+	}
+
+	&__id-section {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 1.7rem;
+		font-weight: 500;
+		width: 20%;
+	}
+
+	&__info-section {
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+		width: 55%;
+		padding-top: 1rem;
+
+		p {
+			padding-top: 1rem;
+			font-size: 1.2rem;
+		}
+	}
+
+	&__button-section {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding-right: 1rem;
+
+		button {
+			width: 110px;
+			background-color: var(--color-blue-2);
+			color: white;
+			padding: 0.6rem;
+			border: 1px solid #fff;
+			border-radius: 2px;
+			cursor: pointer;
+
+			&:hover {
+				background-color: var(--color-grey-light-1);
+			}
+		}
+
+		ul {
+			list-style: none;
+
+			li {
+				text-align: center;
+				// min-width: 80px;
+				padding: 0.5rem 0;
+			}
+		}
+	}
+}
+
+.create-project-card {
+	display: block;
+	position: relative;
+	width: 700px;
+	min-height: 100px;
+	font-size: 2rem;
+	background-color: var(--color-grey-light-3);
+	color: var(--color-grey-dark-2);
+	cursor: pointer;
+
+	&:hover {
+		background-color: var(--color-grey-dark-1);
+	}
+
+	&__text {
+		display: flex;
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		justify-content: center;
+		align-items: center;
+		color: var(--color-grey-dark-1);
+
+		&:hover {
+			color: white;
+		}
+	}
+}
+
+// a > span {
+// 	color: orange;
+// 	text-decoration: none;
+// 	width: 300px;
+// 	height: 100px;
+
+// 	// Create Project Card
+
+// }
+
+// Project Task Item
+.task-item {
+	display: flex;
+	justify-content: space-between;
+	color: var(--color-blue-dark-1);
+	p {
+	}
+
+	&__icon-list {
+		display: flex;
+		flex-direction: column;
+
+		&__edit {
+			color: var(--color-blue-2);
+			margin-bottom: 0.8rem;
+			cursor: pointer;
+		}
+
+		&__remove {
+			color: darkred;
+			cursor: pointer;
+		}
+	}
+}
+
+.popup-task {
+	height: 100vh;
+	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: rgba(black, 0.6);
+	z-index: 1000;
+	// opacity: 1;
+	// filter: blur(0);
+	// transform: scale(1);
+	// visibility: visible;
+	// transition: all 2s;
+
+	// &:target {
+	// 	opacity: 1;
+	// 	visibility: visible;
+	// }
+
+	// &.off {
+	// 	opacity: 0;
+	// 	visibility: hidden;
+	// 	filter: blur(8px);
+	// 	transform: scale(0.33);
+	// 	// box-shadow: 1rem 0 0 rgba(black, 0.2);
+	// }
+
+	&__content {
+		// TODO : Create Mixin for abs center
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+
+		width: 30%;
+		height: 50rem;
+		color: var(white);
+		box-shadow: 0 2rem 4rem rgba(black, 0.2);
+		background-color: var(--color-grey-light-1);
+		border-radius: 10px;
+		z-index: 1001;
+		// opacity: 0;
+		// transform: scale(0.5);
+
+		&__close {
+			&:link,
+			&:visited {
+				color: black;
+				position: absolute;
+				top: 0.5rem;
+				right: 1rem;
+				font-size: 3rem;
+				text-decoration: none;
+				display: inline-block;
+				line-height: 1;
+			}
+
+			&:hover {
+				color: green;
+			}
+		}
+	}
+}
+
+// Components
+.card-2 {
+	// display: flex;
+	border: 1px solid var(--color-grey-light-1);
+	border-radius: 5px;
+}
+
+.btn__sign-up {
+	display: inline-block;
+	background-color: var(--color-blue-1);
+	color: white;
+	border-radius: 4px;
+	border: none;
+	font-size: 1.8rem;
+	padding: 0.8rem;
+	font-weight: 600;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+.btn__login {
+	display: inline-block;
+	background-color: var(#fff);
+	color: var(--color-blue-1);
+	border-radius: 4px;
+	border: none;
+	font-size: 1.8rem;
+	padding: 0.8rem;
+	text-decoration: none;
+	font-weight: 600;
+}
+
+.header-icon {
+	display: flex;
+	background-color: var(--color-blue-3);
+	color: #fff;
+	border-radius: 5px;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+
+	&:hover {
+		background-color: var(--color-blue-4);
+	}
+}
+
+/* Forms */
+.form-box {
+	display: flex;
+	flex-direction: column;
+	position: absolute;
+	top: 13%;
+	left: calc(50% - 200px);
+	width: 400px;
+	margin: 0 auto;
+	background-color: white;
+	box-shadow: 0 1.5rem 4rem rgba(black, 0.15);
+
+	&__title {
+		margin-top: 3rem;
+		color: var(--color-blue-dark-1);
+		text-align: center;
+	}
+
+	.input-user-form {
+		display: block;
+		font-size: 1.2rem;
+		border: 2px solid #ccc;
+		border-radius: 2px;
+		background-color: var(--color-grey-light-5);
+		height: 40px;
+		width: 80%;
+		margin: 2.5rem auto;
+		padding: 1rem;
+	}
+
+	.hr-seperator {
+		width: 80%;
+		margin: 1rem auto;
+	}
+
+	.sign-up-link {
+		margin: 1rem auto;
+		color: var(--primary-color);
+	}
+}
+
+.form-box-login {
+	height: 400px;
+}
+
+.form-box-sign-up {
+	height: 500px;
+}
+
+.submit-btn {
+	display: block;
+	border: 2px solid #ccc;
+	border-radius: 2px;
+	background-color: var(--color-green-light-2);
+	color: white;
+	height: 40px;
+	width: 80%;
+	margin: 2rem auto;
+	padding: 1rem;
+	cursor: pointer;
+
+	&:hover {
+		background-color: var(--color-green-light-1);
+	}
+}
+
+input {
+	margin: 1.2rem 0;
+}
+
+.form-text {
+	display: block;
+	margin-top: 0.3rem;
+	color: #888;
+}
+
+// input[type='text'],
+// input[type='email'],
+// input[type='password'],
+// input[type='date'],
+// select,
+// textarea {
+// 	display: block;
+// 	width: 90%;
+// 	padding: 0.4rem;
+// 	font-size: 1.2rem;
+// 	border: 1px solid #ccc;
+// }
+
+input[type='submit'],
+button {
+	font: inherit;
+}

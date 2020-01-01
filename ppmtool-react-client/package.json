@@ -4,8 +4,10 @@
 	"private": true,
 	"dependencies": {
 		"axios": "^0.19.0",
+		"bootstrap": "^4.4.1",
 		"classnames": "^2.2.6",
 		"jwt-decode": "^2.2.0",
+		"node-sass": "^4.13.0",
 		"react": "^16.10.1",
 		"react-beautiful-dnd": "^12.2.0",
 		"react-dom": "^16.10.1",

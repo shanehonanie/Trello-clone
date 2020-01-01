@@ -14,78 +14,69 @@ class Header extends Component {
 		const { validToken, user } = this.props.security;
 
 		const userIsNotAuthenticated = (
-			<div className='collapse navbar-collapse' id='mobile-nav'>
-				<ul className='navbar-nav ml-auto'>
-					<li className='nav-item'>
-						<Link className='nav-link' to='/register'>
-							Sign Up
-						</Link>
-					</li>
-					<li className='nav-item'>
-						<Link className='nav-link' to='/login'>
-							Login
-						</Link>
-					</li>
-				</ul>
-			</div>
+			<header className='header'>
+				<Link to='/'>
+					<h2 className='header__title'>Trello Clone</h2>
+				</Link>
+				<div className='nav-links'>
+					<Link to='/login'>
+						<button className='nav-links__login btn__sign-up'>Log In</button>
+					</Link>
+
+					<Link to='/register'>
+						<button className='nav-links__sign-up btn__login'>Sign Up</button>
+					</Link>
+				</div>
+			</header>
 		);
 
+		// TODO: Update Logged in Links
 		const userIsAuthenticated = (
-			<div className='collapse navbar-collapse' id='mobile-nav'>
-				<ul className='navbar-nav mr-auto'>
-					<li className='nav-item'>
-						<Link className='nav-link' to='/dashboard'>
-							Dashboard
+			<div className='header-authenticated'>
+				<div className='header-authenticated__left'>
+					<div className='header-authenticated__left__home header-icon'>
+						<Link to='/dashboard'>
+							<i className='fas fa-home' />
 						</Link>
-					</li>
-				</ul>
+					</div>
+					<div className='header-authenticated__left__board header-icon'>
+						<i className='fas fa-list'>
+							{' '}
+							<span className='header-authenticated__left__board__text'>
+								Boards
+							</span>
+						</i>
+					</div>
+				</div>
 
-				<ul className='navbar-nav ml-auto'>
-					<li className='nav-item'>
-						<Link className='nav-link' to='/dashboard'>
-							<i className='fas fa-user-circle mr-1' />
-							{user.fullName}p
+				<div className='header-authenticated__middle'>
+					<div className='header-authenticated__middle__title'>
+						<Link to='/dashboard'>
+							<h2>Trello Clone</h2>
 						</Link>
-					</li>
-					<li className='nav-item'>
-						<Link
-							className='nav-link'
-							to='/logout'
-							onClick={() => this.onLogout()}
-						>
-							Logout
-						</Link>
-					</li>
-				</ul>
+					</div>
+				</div>
+
+				<div className='header-authenticated__right'>
+					<div className='header-authenticated__right__user header-icon'>
+						<i className='fas fa-user' />
+					</div>
+					<Link to='/logout' onClick={() => this.onLogout()}>
+						Logout
+					</Link>
+				</div>
 			</div>
 		);
 
-		let headerLinks;
+		let header;
 
 		if (validToken && user) {
-			headerLinks = userIsAuthenticated;
+			header = userIsAuthenticated;
 		} else {
-			headerLinks = userIsNotAuthenticated;
+			header = userIsNotAuthenticated;
 		}
 
-		return (
-			<nav className='navbar navbar-expand-sm navbar-dark bg-primary mb-4'>
-				<div className='container'>
-					<Link className='navbar-brand' to='/'>
-						Personal Project Management Tool
-					</Link>
-					<button
-						className='navbar-toggler'
-						type='button'
-						data-toggle='collapse'
-						data-target='#mobile-nav'
-					>
-						<span className='navbar-toggler-icon' />
-					</button>
-					{headerLinks}
-				</div>
-			</nav>
-		);
+		return header;
 	}
 }
 
@@ -98,7 +89,4 @@ const mapStateToProps = state => ({
 	security: state.security
 });
 
-export default connect(
-	mapStateToProps,
-	{ logout }
-)(Header);
+export default connect(mapStateToProps, { logout })(Header);
