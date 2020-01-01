@@ -7,14 +7,9 @@ import {
 	GET_ERRORS
 } from './types';
 
-export const addProjectTask = (
-	backlog_id,
-	project_task,
-	history
-) => async dispatch => {
+export const addProjectTask = (backlogId, projectTask) => async dispatch => {
 	try {
-		await axios.post(`/api/backlog/${backlog_id}`, project_task);
-		// history.push(`/projectBoard/${backlog_id}`);
+		await axios.post(`/api/backlog/${backlogId}`, projectTask);
 		dispatch({
 			type: GET_ERRORS,
 			payload: {}
@@ -27,9 +22,9 @@ export const addProjectTask = (
 	}
 };
 
-export const getBacklog = backlog_id => async dispatch => {
+export const getBacklog = backlogId => async dispatch => {
 	try {
-		const res = await axios.get(`/api/backlog/${backlog_id}`);
+		const res = await axios.get(`/api/backlog/${backlogId}`);
 		dispatch({
 			type: GET_BACKLOG,
 			payload: res.data
@@ -42,13 +37,9 @@ export const getBacklog = backlog_id => async dispatch => {
 	}
 };
 
-export const getProjectTask = (
-	backlog_id,
-	pt_id,
-	history
-) => async dispatch => {
+export const getProjectTask = (backlogId, ptId, history) => async dispatch => {
 	try {
-		const res = await axios.get(`/api/backlog/${backlog_id}/${pt_id}`);
+		const res = await axios.get(`/api/backlog/${backlogId}/${ptId}`);
 		dispatch({
 			type: GET_PROJECT_TASK,
 			payload: res.data
@@ -58,15 +49,13 @@ export const getProjectTask = (
 	}
 };
 
-export const updateProjectTask = (
-	backlog_id,
-	pt_id,
-	project_task,
-	history
-) => async dispatch => {
+export const updateProjectTask = projectTask => async dispatch => {
 	try {
-		await axios.patch(`/api/backlog/${backlog_id}/${pt_id}`, project_task);
-		history.push(`/projectBoard/${backlog_id}`);
+		console.log('backlogActions update projectTask', projectTask);
+		await axios.patch(
+			`/api/backlog/${projectTask.projectIdentifier}/${projectTask.projectSequence}`,
+			projectTask
+		);
 		dispatch({
 			type: GET_ERRORS,
 			payload: {}
@@ -79,17 +68,10 @@ export const updateProjectTask = (
 	}
 };
 
-export const deleteProjectTask = (backlog_id, pt_id) => async dispatch => {
-	// if (
-	// 	window.confirm(
-	// 		`You are deleting project task ${pt_id}, this action cannot be undone`
-	// 	)
-	// ) {
-	await axios.delete(`/api/backlog/${backlog_id}/${pt_id}`);
+export const deleteProjectTask = (backlogId, ptId) => async dispatch => {
+	await axios.delete(`/api/backlog/${backlogId}/${ptId}`);
 	dispatch({
 		type: DELETE_PROJECT_TASK,
-		payload: pt_id
+		payload: ptId
 	});
-
-	// }
 };
