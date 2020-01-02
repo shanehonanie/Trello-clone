@@ -1,6 +1,7 @@
 export const GET_ERRORS = 'GET_ERRORS';
 export const GET_PROJECTS = 'GET_PROJECTS';
 export const GET_PROJECT = 'GET_PROJECT';
+export const ADD_PROJECT = 'ADD_PROJECT';
 export const DELETE_PROJECT = 'DELETE_PROJECT';
 
 // Types for Backlog actions

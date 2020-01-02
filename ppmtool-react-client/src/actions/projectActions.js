@@ -1,21 +1,11 @@
 import axios from 'axios';
-import { GET_ERRORS, GET_PROJECTS, GET_PROJECT, DELETE_PROJECT } from './types';
-
-export const createProject = (project, history) => async dispatch => {
-	try {
-		await axios.post('/api/project', project);
-		history.push('/dashboard');
-		dispatch({
-			type: GET_ERRORS,
-			payload: {}
-		});
-	} catch (err) {
-		dispatch({
-			type: GET_ERRORS,
-			payload: err.response.data
-		});
-	}
-};
+import {
+	GET_ERRORS,
+	GET_PROJECTS,
+	GET_PROJECT,
+	ADD_PROJECT,
+	DELETE_PROJECT
+} from './types';
 
 export const getProjects = () => async dispatch => {
 	const res = await axios.get('/api/project/all');
@@ -25,15 +15,36 @@ export const getProjects = () => async dispatch => {
 	});
 };
 
-export const getProject = (id, history) => async dispatch => {
+export const getProject = id => async dispatch => {
 	try {
 		const res = await axios.get(`/api/project/${id}`);
+		console.log('projectActions getproject res.data', res.data);
 		dispatch({
 			type: GET_PROJECT,
 			payload: res.data
 		});
-	} catch (error) {
-		history.push('/dashboard');
+	} catch (err) {
+		console.log('projectActions getproject error');
+		// TODO: Error Handling
+		dispatch({
+			type: GET_ERRORS,
+			payload: err.response.data
+		});
+	}
+};
+
+export const createProject = project => async dispatch => {
+	try {
+		const res = await axios.post('/api/project', project);
+		dispatch({
+			type: ADD_PROJECT,
+			payload: res.data
+		});
+	} catch (err) {
+		dispatch({
+			type: GET_ERRORS,
+			payload: err.response.data
+		});
 	}
 };
 

@@ -1,4 +1,9 @@
-import { GET_PROJECTS, GET_PROJECT, DELETE_PROJECT } from '../actions/types';
+import {
+	GET_PROJECTS,
+	GET_PROJECT,
+	ADD_PROJECT,
+	DELETE_PROJECT
+} from '../actions/types';
 
 const initialState = {
 	projects: [],
@@ -16,6 +21,12 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				project: action.payload
+			};
+		case ADD_PROJECT:
+			console.log('projectReducer.js ADD_PROJECT action.payload');
+			return {
+				...state,
+				projects: state.projects.concat(action.payload)
 			};
 		case DELETE_PROJECT:
 			return {
