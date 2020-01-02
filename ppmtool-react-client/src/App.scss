@@ -271,7 +271,9 @@ a {
 
 	&__text {
 		display: flex;
-		position: absolute;
+		flex-direction: column;
+		justify-content: center;
+		align-content: center;
 		height: 100%;
 		width: 100%;
 		justify-content: center;
