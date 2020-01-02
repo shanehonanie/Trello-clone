@@ -28,13 +28,14 @@ class AddTaskModal extends Component {
 	};
 
 	onClose = e => {
+		e.preventDefault();
 		this.props.onClose && this.props.onClose(e);
 		// console.log('this.props.onClose', this.props.onClose);
 		// console.log('this.props.onClose(e)', this.props.onClose(e));
 	};
 
 	onSubmit = e => {
-		// e.preventDefault();
+		e.preventDefault();
 
 		const newTask = {
 			summary: this.state.summary,
@@ -44,12 +45,20 @@ class AddTaskModal extends Component {
 			dueDate: this.state.dueDate
 		};
 
-		this.props.addProjectTask(
-			this.state.projectIdentifier,
-			newTask,
-			this.props.history
-		);
-		this.onClose();
+		this.props.addProjectTask(this.state.projectIdentifier, newTask);
+		this.resetState();
+		this.onClose(e);
+	};
+
+	resetState = () => {
+		this.setState({
+			summary: '',
+			acceptanceCriteria: '',
+			status: '',
+			priority: 0,
+			dueDate: '',
+			projectIdentifier: this.props.projectId
+		});
 	};
 
 	render() {
@@ -62,13 +71,9 @@ class AddTaskModal extends Component {
 		return (
 			<div className='popup-task'>
 				<div className='popup-task__content'>
-					<a
-						href=''
-						className='popup-task__content__close'
-						onClick={this.onClose}
-					>
+					<button className='popup-task__content__close' onClick={this.onClose}>
 						&times;
-					</a>
+					</button>
 					<h4 className='display-4 text-center'>Add Project Task</h4>
 					<p className='lead text-center'>Project Name + Project Code</p>
 					<form onSubmit={this.onSubmit}>

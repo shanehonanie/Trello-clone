@@ -143,6 +143,7 @@ class ProjectBoard extends Component {
 							proj => proj.id === this.state.selectedProjectId
 						)}
 						onDeleteTaskCallback={this.onDeleteCallback}
+						setIdCallback={this.setSelectedProject}
 					/>
 					<button
 						className='create-project-task-btn'

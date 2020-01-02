@@ -33,7 +33,50 @@ class Backlog extends Component {
 	};
 
 	componentDidMount() {
+		console.log('Backlog.js componentDidMount');
 		const { projectTasks } = this.props;
+
+		const newTodoTasksIds = [];
+		const newInProgressTasksIds = [];
+		const newDoneTasksIds = [];
+
+		for (let i = 0; i < projectTasks.length; i++) {
+			if (projectTasks[i].status === 'TODO') {
+				newTodoTasksIds.push(projectTasks[i].projectSequence);
+			}
+			if (projectTasks[i].status === 'IN_PROGRESS') {
+				newInProgressTasksIds.push(projectTasks[i].projectSequence);
+			}
+			if (projectTasks[i].status === 'DONE') {
+				newDoneTasksIds.push(projectTasks[i].projectSequence);
+			}
+		}
+
+		this.setState(prevState => ({
+			...prevState,
+			tasks: [...projectTasks],
+			columns: {
+				...prevState.columns,
+				TODO: {
+					...prevState.columns.TODO,
+					taskIds: newTodoTasksIds
+				},
+				IN_PROGRESS: {
+					...prevState.columns.IN_PROGRESS,
+					taskIds: newInProgressTasksIds
+				},
+				DONE: {
+					...prevState.columns.DONE,
+					taskIds: newDoneTasksIds
+				}
+			}
+		}));
+	}
+
+	componentWillReceiveProps(nextProps) {
+		console.log('Backlog.js componentWillReceiveProps');
+		// TODO: Optimize updating state?? instead of or repopulate entire state?
+		const { projectTasks } = nextProps;
 
 		const newTodoTasksIds = [];
 		const newInProgressTasksIds = [];

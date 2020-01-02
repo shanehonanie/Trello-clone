@@ -24,7 +24,17 @@ class UpdateTaskModal extends Component {
 		// console.log('UpdateTaskModal nextProps.project', nextProps.project);
 		// console.log('UpdateTaskModal this.props.project', this.props.project);
 
-		if (nextProps.project !== this.props.project) {
+		if (
+			nextProps.project !== this.props.project &&
+			nextProps.project !== undefined
+		) {
+			// console.log('UpdateTaskModal nextProps.project', nextProps.project);
+			// console.log('UpdateTaskModal this.props.project', this.props.project);
+			// console.log(
+			// 	'nextProps.project === undefined',
+			// 	nextProps.project === undefined
+			// );
+
 			this.setState({
 				summary: nextProps.project.summary,
 				acceptanceCriteria: nextProps.project.acceptanceCriteria,
@@ -50,13 +60,14 @@ class UpdateTaskModal extends Component {
 	};
 
 	onClose = e => {
+		e.preventDefault();
 		this.props.onClose && this.props.onClose(e);
 		// console.log('this.props.onClose', this.props.onClose);
 		// console.log('this.props.onClose(e)', this.props.onClose(e));
 	};
 
 	onSubmit = e => {
-		// e.preventDefault();
+		e.preventDefault();
 
 		const updatedProjectTask = {
 			id: this.state.id,
@@ -71,6 +82,7 @@ class UpdateTaskModal extends Component {
 		};
 
 		this.props.onUpdateTaskCallback(updatedProjectTask);
+		this.onClose(e);
 	};
 
 	render() {
@@ -98,13 +110,9 @@ class UpdateTaskModal extends Component {
 		return (
 			<div className='popup-task'>
 				<div className='popup-task__content'>
-					<a
-						href=''
-						className='popup-task__content__close'
-						onClick={this.onClose}
-					>
+					<button className='popup-task__content__close' onClick={this.onClose}>
 						&times;
-					</a>
+					</button>
 					<form onSubmit={this.onSubmit}>
 						<div className='form-group'>
 							<input

@@ -34,19 +34,19 @@ class Header extends Component {
 		const userIsAuthenticated = (
 			<div className='header-authenticated'>
 				<div className='header-authenticated__left'>
-					<div className='header-authenticated__left__home header-icon'>
-						<Link to='/dashboard'>
+					<Link to='/dashboard'>
+						<div className='header-authenticated__left__home header-icon'>
 							<i className='fas fa-home' />
-						</Link>
-					</div>
-					<div className='header-authenticated__left__board header-icon'>
+						</div>
+					</Link>
+
+					<button className='header-authenticated__left__board header-icon'>
 						<i className='fas fa-list'>
-							{' '}
 							<span className='header-authenticated__left__board__text'>
 								Boards
 							</span>
 						</i>
-					</div>
+					</button>
 				</div>
 
 				<div className='header-authenticated__middle'>

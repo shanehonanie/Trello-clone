@@ -108,22 +108,22 @@ html {
 		height: 100%;
 
 		&__home {
+			height: 80%;
 			font-size: 1.5rem;
 			width: 4rem;
 			margin: 0.4rem;
-		}
-
-		a {
-			color: white;
+			text-decoration: none;
 		}
 
 		&__board {
+			height: 80%;
 			font-size: 1.5rem;
 			width: 10rem;
 			margin: 0.4rem 0;
+			border: none;
 
 			&__text {
-				margin-left: 0.5rem;
+				margin-left: 1rem;
 			}
 		}
 	}
@@ -364,16 +364,22 @@ a {
 		// transform: scale(0.5);
 
 		&__close {
-			&:link,
+			position: absolute;
+			color: black;
+			background-color: var(--color-grey-light-1);
+			border: none;
+			top: 1rem;
+			right: 1.5rem;
+			font-size: 3rem;
+			text-decoration: none;
+			display: inline-block;
+			line-height: 1;
+			// outline: none;
+
+			&:active,
+			&:focus,
 			&:visited {
-				color: black;
-				position: absolute;
-				top: 0.5rem;
-				right: 1rem;
-				font-size: 3rem;
-				text-decoration: none;
-				display: inline-block;
-				line-height: 1;
+				outline: none;
 			}
 
 			&:hover {
