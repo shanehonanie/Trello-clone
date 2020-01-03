@@ -1,9 +1,9 @@
 import {
 	GET_PROJECTS,
-	GET_PROJECT,
 	SET_PROJECT,
 	CLEAR_PROJECT,
 	ADD_PROJECT,
+	UPDATE_PROJECT,
 	DELETE_PROJECT
 } from '../actions/types';
 
@@ -19,11 +19,6 @@ export default function(state = initialState, action) {
 				...state,
 				projects: action.payload
 			};
-		case GET_PROJECT:
-			return {
-				...state,
-				project: action.payload
-			};
 		case SET_PROJECT:
 			return {
 				...state,
@@ -38,6 +33,18 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				projects: state.projects.concat(action.payload)
+			};
+		case UPDATE_PROJECT:
+			const index = state.projects.findIndex(p => p.id === action.payload.id);
+			return {
+				...state,
+				projects: [
+					...state.projects.slice(0, index),
+					{
+						...(state[index] = action.payload)
+					},
+					...state.projects.slice(index + 1)
+				]
 			};
 		case DELETE_PROJECT:
 			return {

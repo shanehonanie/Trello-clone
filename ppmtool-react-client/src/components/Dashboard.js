@@ -5,14 +5,14 @@ import PropTypes from 'prop-types';
 import { getProjects } from '../actions/projectActions';
 import ProjectItem from './Project/ProjectItem';
 import AddProjectModal from './Project/AddProjectModal';
+import UpdateProjectModal from './Project/UpdateProjectModal';
 import DeleteProjectModal from './Project/DeleteProjectModal';
 
 class Dashboard extends Component {
 	state = {
 		showAddProjectModal: false,
 		showUpdateProjectModal: false,
-		showDeleteProjectModal: false,
-		selectedProjectId: -1
+		showDeleteProjectModal: false
 	};
 
 	componentDidMount() {
@@ -25,8 +25,14 @@ class Dashboard extends Component {
 		});
 	};
 
+	toggleUpdateProjectModal = e => {
+		console.log('Dashboard.js toggleUpdateProjectModal called');
+		this.setState({
+			showUpdateProjectModal: !this.state.showUpdateProjectModal
+		});
+	};
+
 	toggleDeleteProjectModal = e => {
-		console.log('Dashboard.js toggleDeleteProjectModal called');
 		this.setState({
 			showDeleteProjectModal: !this.state.showDeleteProjectModal
 		});
@@ -43,6 +49,10 @@ class Dashboard extends Component {
 							onClose={this.toggleAddProjectModal}
 							show={this.state.showAddProjectModal}
 						/>
+						<UpdateProjectModal
+							onClose={this.toggleUpdateProjectModal}
+							show={this.state.showUpdateProjectModal}
+						/>
 						<DeleteProjectModal
 							onClose={this.toggleDeleteProjectModal}
 							show={this.state.showDeleteProjectModal}
@@ -54,6 +64,7 @@ class Dashboard extends Component {
 								<ProjectItem
 									key={project.id}
 									project={project}
+									toggleUpdateModalCallback={this.toggleUpdateProjectModal}
 									toggleDeleteModalCallback={this.toggleDeleteProjectModal}
 								/>
 							))}

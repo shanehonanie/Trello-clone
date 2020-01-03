@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { setProject } from '../../actions/projectActions';
 
 class ProjectItem extends Component {
-	redirectToUpdateProject = () => {
+	redirectToProjectBacklog = () => {
 		console.log('this.props.project', this.props.project);
 		this.props.history.push(
 			`/projectBoard/${this.props.project.projectIdentifier}`
@@ -15,12 +15,13 @@ class ProjectItem extends Component {
 	onEditClick = e => {
 		e.stopPropagation();
 		this.props.setProject(this.props.project);
+		this.props.toggleUpdateModalCallback();
 	};
 
 	onDeleteClick = e => {
 		e.stopPropagation();
-		this.props.toggleDeleteModalCallback();
 		this.props.setProject(this.props.project);
+		this.props.toggleDeleteModalCallback();
 	};
 
 	render() {
@@ -28,7 +29,7 @@ class ProjectItem extends Component {
 		return (
 			<div
 				className='project-card card-2'
-				onClick={this.redirectToUpdateProject}
+				onClick={this.redirectToProjectBacklog}
 			>
 				<div className='project-card__id-section'>
 					{project.projectIdentifier}

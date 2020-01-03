@@ -1,9 +1,9 @@
 export const GET_ERRORS = 'GET_ERRORS';
 export const GET_PROJECTS = 'GET_PROJECTS';
-export const GET_PROJECT = 'GET_PROJECT';
 export const SET_PROJECT = 'SET_PROJECT';
 export const CLEAR_PROJECT = 'CLEAR_PROJECT';
 export const ADD_PROJECT = 'ADD_PROJECT';
+export const UPDATE_PROJECT = 'UPDATE_PROJECT';
 export const DELETE_PROJECT = 'DELETE_PROJECT';
 
 // Types for Backlog actions

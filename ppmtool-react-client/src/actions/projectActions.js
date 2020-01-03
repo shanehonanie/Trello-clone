@@ -2,10 +2,10 @@ import axios from 'axios';
 import {
 	GET_ERRORS,
 	GET_PROJECTS,
-	GET_PROJECT,
 	SET_PROJECT,
 	CLEAR_PROJECT,
 	ADD_PROJECT,
+	UPDATE_PROJECT,
 	DELETE_PROJECT
 } from './types';
 
@@ -15,21 +15,6 @@ export const getProjects = () => async dispatch => {
 		type: GET_PROJECTS,
 		payload: res.data
 	});
-};
-
-export const getProject = id => async dispatch => {
-	try {
-		const res = await axios.get(`/api/project/${id}`);
-		dispatch({
-			type: GET_PROJECT,
-			payload: res.data
-		});
-	} catch (err) {
-		dispatch({
-			type: GET_ERRORS,
-			payload: err.response.data
-		});
-	}
 };
 
 export const setProject = project => async dispatch => {
@@ -67,6 +52,24 @@ export const createProject = project => async dispatch => {
 			payload: res.data
 		});
 	} catch (err) {
+		dispatch({
+			type: GET_ERRORS,
+			payload: err.response.data
+		});
+	}
+};
+
+export const updateProject = project => async dispatch => {
+	try {
+		// TODO: Create an Update route instead of using create route
+		const res = await axios.post('/api/project', project);
+		console.log('res.data', res.data);
+		dispatch({
+			type: UPDATE_PROJECT,
+			payload: res.data
+		});
+	} catch (err) {
+		console.log(err);
 		dispatch({
 			type: GET_ERRORS,
 			payload: err.response.data
