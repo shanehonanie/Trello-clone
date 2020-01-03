@@ -33,7 +33,7 @@ class Backlog extends Component {
 	};
 
 	componentDidMount() {
-		console.log('Backlog.js componentDidMount');
+		// console.log('Backlog.js componentDidMount');
 		const { projectTasks } = this.props;
 
 		const newTodoTasksIds = [];
@@ -74,7 +74,7 @@ class Backlog extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		console.log('Backlog.js componentWillReceiveProps');
+		// console.log('Backlog.js componentWillReceiveProps');
 		// TODO: Optimize updating state?? instead of or repopulate entire state?
 		const { projectTasks } = nextProps;
 

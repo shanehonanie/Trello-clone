@@ -441,16 +441,44 @@ a {
 }
 
 // User dropdown
-.dropdown-header {
+.dropdown-header-user {
 	font-size: 1.5rem;
 }
 
-.dropdown-menu {
+.dropdown-menu-user {
 	width: 250px;
-	height: 80px;
+	// height: 70px;
+	border-radius: 5px;
+	box-shadow: 0 1.5rem 4rem rgba(black, 0.15);
 }
 
-a.dropdown-item {
+.dropdown-divider {
+	width: 90%;
+	margin: 0 auto;
+}
+
+a.dropdown-item-user {
+	font-size: 1.5rem;
+	color: var(--color-blue-dark-1);
+
+	&:hover {
+		background-color: var(--color-grey-light-2);
+	}
+}
+
+// Board dropdown
+.dropdown-header-board {
+	font-size: 1.5rem;
+}
+
+.dropdown-menu-board {
+	width: 250px;
+	// height: 80px;
+	border-radius: 5px;
+	box-shadow: 0 1.5rem 4rem rgba(black, 0.15);
+}
+
+a.dropdown-item-board {
 	font-size: 1.5rem;
 	color: var(--color-blue-dark-1);
 

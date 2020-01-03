@@ -3,11 +3,16 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logout } from '../../actions/securityActions';
+import { setProject } from '../../actions/projectActions';
 
 class Header extends Component {
 	onLogout = () => {
 		this.props.logout();
 		window.location.href = '/';
+	};
+
+	onClickProjectLink = p => {
+		this.props.setProject(p);
 	};
 
 	render() {
@@ -40,13 +45,41 @@ class Header extends Component {
 						</div>
 					</Link>
 
-					<button className='header-authenticated__left__board header-icon'>
-						<i className='fas fa-list'>
-							<span className='header-authenticated__left__board__text'>
-								Boards
-							</span>
-						</i>
-					</button>
+					<div className='dropdown'>
+						<button
+							className='header-authenticated__left__board header-icon'
+							type='button'
+							id='dropdownBoardButton'
+							data-toggle='dropdown'
+							aria-haspopup='true'
+							aria-expanded='false'
+						>
+							<i className='fas fa-list'>
+								<span className='header-authenticated__left__board__text'>
+									Boards
+								</span>
+							</i>
+						</button>
+						<div
+							className='dropdown-menu dropdown-menu-board'
+							aria-labelledby='dropdownBoardButton'
+						>
+							<h3 className='dropdown-header dropdown-header-board'>
+								Recent Boards
+							</h3>
+							<div className='dropdown-divider'></div>
+							{this.props.projects.map(p => (
+								<Link
+									key={p.projectIdentifier}
+									to={`/projectBoard/${p.projectIdentifier}`}
+									onClick={() => this.onClickProjectLink(p)}
+									className='dropdown-item dropdown-item-board'
+								>
+									{p.projectName}
+								</Link>
+							))}
+						</div>
+					</div>
 				</div>
 
 				<div className='header-authenticated__middle'>
@@ -70,29 +103,22 @@ class Header extends Component {
 							<i className='fas fa-user' />
 						</button>
 						<div
-							className='dropdown-menu dropdown-menu-right'
+							className='dropdown-menu dropdown-menu-right dropdown-menu-user'
 							aria-labelledby='dropdownMenuButton'
 						>
-							<h3 className='dropdown-header'>
+							<h3 className='dropdown-header dropdown-header-user'>
 								{this.props.security.user.username}
 							</h3>
 							<div className='dropdown-divider'></div>
 							<Link
 								to='/logout'
-								className='dropdown-item'
+								className='dropdown-item dropdown-item-user'
 								onClick={() => this.onLogout()}
 							>
 								Logout
 							</Link>
 						</div>
 					</div>
-
-					{/* <div className='header-authenticated__right__user header-icon'>
-						<i className='fas fa-user' />
-					</div>
-					<Link to='/logout' onClick={() => this.onLogout()}>
-						Logout
-					</Link> */}
 				</div>
 			</div>
 		);
@@ -111,11 +137,14 @@ class Header extends Component {
 
 Header.propTypes = {
 	logout: PropTypes.func.isRequired,
-	security: PropTypes.object.isRequired
+	setProject: PropTypes.func.isRequired,
+	security: PropTypes.object.isRequired,
+	projects: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => ({
-	security: state.security
+	security: state.security,
+	projects: state.project.projects
 });
 
-export default connect(mapStateToProps, { logout })(Header);
+export default connect(mapStateToProps, { logout, setProject })(Header);

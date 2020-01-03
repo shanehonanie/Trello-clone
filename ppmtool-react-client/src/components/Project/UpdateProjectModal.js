@@ -17,10 +17,10 @@ class UpdateProjectModal extends Component {
 	};
 
 	componentDidMount() {
-		console.log(
-			'UpdateProjectModal componentDidMount this.props.project',
-			this.props.project
-		);
+		// console.log(
+		// 	'UpdateProjectModal componentDidMount this.props.project',
+		// 	this.props.project
+		// );
 	}
 
 	componentWillReceiveProps(nextProps) {

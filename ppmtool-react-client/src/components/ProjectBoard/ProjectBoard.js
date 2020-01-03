@@ -22,38 +22,41 @@ class ProjectBoard extends Component {
 	};
 
 	componentDidMount() {
+		// console.log('ProjectBoard.js componentDidMount');
 		const { id } = this.props.match.params;
 		this.props.getBacklog(id);
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.errors) {
+		// console.log('ProjectBoard.js componentWillReceiveProps');
+		if (this.props.errors !== nextProps.errors) {
 			this.setState({ errors: nextProps.errors });
+		}
+
+		if (this.props.match.params.id !== nextProps.match.params.id) {
+			const { id } = nextProps.match.params;
+			this.props.getBacklog(id);
 		}
 	}
 
 	toggleAddModal = e => {
-		console.log('toggleAddModal in ProjectBoard called');
 		this.setState({
 			showAddModal: !this.state.showAddModal
 		});
 	};
 	toggleUpdateModal = e => {
-		console.log('toggleUpdateModal in ProjectBoard called');
 		this.setState({
 			showUpdateModal: !this.state.showUpdateModal
 		});
 	};
 
 	toggleDeleteModal = e => {
-		console.log('toggleDeleteModal in ProjectBoard called');
 		this.setState({
 			showDeleteModal: !this.state.showDeleteModal
 		});
 	};
 
 	setSelectedProject = id => {
-		console.log('Project Board: id', id);
 		this.setState({ selectedProjectId: id });
 	};
 
@@ -83,7 +86,6 @@ class ProjectBoard extends Component {
 		let boardContent;
 
 		const boardAlgorithm = (errors, projectTasks) => {
-			console.log('projectTasks from ProjectBoard.js', projectTasks);
 			// TODO : Remove Bootstrap Alerts
 			if (projectTasks.length === 0) {
 				if (errors.projectNotFound) {
