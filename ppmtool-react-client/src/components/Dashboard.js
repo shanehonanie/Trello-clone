@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { getProjects } from '../actions/projectActions';
 import ProjectItem from './Project/ProjectItem';
 import AddProjectModal from './Project/AddProjectModal';
+import DeleteProjectModal from './Project/DeleteProjectModal';
 
 class Dashboard extends Component {
 	state = {
@@ -24,6 +25,13 @@ class Dashboard extends Component {
 		});
 	};
 
+	toggleDeleteProjectModal = e => {
+		console.log('Dashboard.js toggleDeleteProjectModal called');
+		this.setState({
+			showDeleteProjectModal: !this.state.showDeleteProjectModal
+		});
+	};
+
 	render() {
 		const { projects } = this.props.project;
 
@@ -35,11 +43,19 @@ class Dashboard extends Component {
 							onClose={this.toggleAddProjectModal}
 							show={this.state.showAddProjectModal}
 						/>
+						<DeleteProjectModal
+							onClose={this.toggleDeleteProjectModal}
+							show={this.state.showDeleteProjectModal}
+						/>
 						<h1 className='projects-dashboard__title'>Projects</h1>
 						<hr />
 						<div className='projects-dashboard__list'>
 							{projects.map(project => (
-								<ProjectItem key={project.id} project={project} />
+								<ProjectItem
+									key={project.id}
+									project={project}
+									toggleDeleteModalCallback={this.toggleDeleteProjectModal}
+								/>
 							))}
 							<button
 								className='create-project-card card-2'

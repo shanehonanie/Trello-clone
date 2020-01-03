@@ -1,6 +1,8 @@
 import {
 	GET_PROJECTS,
 	GET_PROJECT,
+	SET_PROJECT,
+	CLEAR_PROJECT,
 	ADD_PROJECT,
 	DELETE_PROJECT
 } from '../actions/types';
@@ -22,8 +24,17 @@ export default function(state = initialState, action) {
 				...state,
 				project: action.payload
 			};
+		case SET_PROJECT:
+			return {
+				...state,
+				project: action.payload
+			};
+		case CLEAR_PROJECT:
+			return {
+				...state,
+				project: {}
+			};
 		case ADD_PROJECT:
-			console.log('projectReducer.js ADD_PROJECT action.payload');
 			return {
 				...state,
 				projects: state.projects.concat(action.payload)
