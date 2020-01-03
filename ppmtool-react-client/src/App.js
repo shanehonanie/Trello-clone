@@ -1,5 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle';
 import './App.scss';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -38,12 +39,10 @@ function App() {
 	return (
 		<Provider store={store}>
 			<BrowserRouter>
-				{/* <div className='App'> */}
 				<Header />
 				{
 					// Public Routes
 				}
-
 				<Route exact path='/' component={Landing} />
 				<Route exact path='/register' component={Register} />
 				<Route exact path='/login' component={Login} />
@@ -54,7 +53,6 @@ function App() {
 					<Route exact path='/dashboard' component={Dashboard} />
 					<Route exact path='/projectBoard/:id' component={ProjectBoard} />
 				</Switch>
-				{/* </div> */}
 			</BrowserRouter>
 		</Provider>
 	);
