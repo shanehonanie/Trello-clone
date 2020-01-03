@@ -58,37 +58,41 @@ class Header extends Component {
 				</div>
 
 				<div className='header-authenticated__right'>
-					<div className='dropdown show'>
-						<a
-							className='btn btn-secondary dropdown-toggle'
-							href='#'
-							role='button'
-							id='dropdownMenuLink'
+					<div className='dropdown'>
+						<button
+							className=' header-authenticated__right__user header-icon'
+							type='button'
+							id='dropdownMenuButton'
 							data-toggle='dropdown'
 							aria-haspopup='true'
 							aria-expanded='false'
 						>
-							Dropdown link
-						</a>
-
-						<div className='dropdown-menu' aria-labelledby='dropdownMenuLink'>
-							<a className='dropdown-item' href='#'>
-								Action
-							</a>
-							<a className='dropdown-item' href='#'>
-								Another action
-							</a>
-							<a className='dropdown-item' href='#'>
-								Something else here
-							</a>
+							<i className='fas fa-user' />
+						</button>
+						<div
+							className='dropdown-menu dropdown-menu-right'
+							aria-labelledby='dropdownMenuButton'
+						>
+							<h3 className='dropdown-header'>
+								{this.props.security.user.username}
+							</h3>
+							<div className='dropdown-divider'></div>
+							<Link
+								to='/logout'
+								className='dropdown-item'
+								onClick={() => this.onLogout()}
+							>
+								Logout
+							</Link>
 						</div>
 					</div>
-					<div className='header-authenticated__right__user header-icon'>
+
+					{/* <div className='header-authenticated__right__user header-icon'>
 						<i className='fas fa-user' />
 					</div>
 					<Link to='/logout' onClick={() => this.onLogout()}>
 						Logout
-					</Link>
+					</Link> */}
 				</div>
 			</div>
 		);

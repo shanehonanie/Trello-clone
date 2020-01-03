@@ -426,6 +426,8 @@ a {
 
 .header-icon {
 	display: flex;
+	height: 80%;
+	border: none;
 	background-color: var(--color-blue-3);
 	color: #fff;
 	border-radius: 5px;
@@ -435,6 +437,25 @@ a {
 
 	&:hover {
 		background-color: var(--color-blue-4);
+	}
+}
+
+// User dropdown
+.dropdown-header {
+	font-size: 1.5rem;
+}
+
+.dropdown-menu {
+	width: 250px;
+	height: 80px;
+}
+
+a.dropdown-item {
+	font-size: 1.5rem;
+	color: var(--color-blue-dark-1);
+
+	&:hover {
+		background-color: var(--color-grey-light-2);
 	}
 }
 
