@@ -68,14 +68,14 @@ class Dashboard extends Component {
 									toggleDeleteModalCallback={this.toggleDeleteProjectModal}
 								/>
 							))}
-							<button
+							<div
 								className='create-project-card card-2'
 								onClick={this.toggleAddProjectModal}
 							>
-								<div className='create-project-card__text'>
-									<i className='fas fa-plus'> Create New Project</i>
-								</div>
-							</button>
+								<span className='create-project-card__text'>
+									<i className='fas fa-plus '> Create New Project</i>
+								</span>
+							</div>
 						</div>
 					</div>
 				</div>

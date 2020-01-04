@@ -107,6 +107,10 @@ html {
 		display: flex;
 		height: 100%;
 
+		a {
+			text-decoration: none;
+		}
+
 		&__home {
 			height: 80%;
 			font-size: 1.5rem;
@@ -256,8 +260,7 @@ a {
 }
 
 .create-project-card {
-	display: block;
-	position: relative;
+	display: flex;
 	width: 700px;
 	min-height: 100px;
 	font-size: 2rem;
@@ -271,13 +274,9 @@ a {
 
 	&__text {
 		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-content: center;
-		height: 100%;
-		width: 100%;
-		justify-content: center;
 		align-items: center;
+		justify-content: center;
+		width: 100%;
 		color: var(--color-grey-dark-1);
 
 		&:hover {
