@@ -39,56 +39,58 @@ class Header extends Component {
 		const userIsAuthenticated = (
 			<div className='header-authenticated'>
 				<div className='header-authenticated__left'>
-					<Link to='/dashboard'>
-						<div className='header-authenticated__left__home header-icon'>
-							<i className='fas fa-home' />
-						</div>
-					</Link>
-
-					<div className='dropdown'>
-						<button
-							className='header-authenticated__left__board header-icon'
-							type='button'
-							id='dropdownBoardButton'
-							data-toggle='dropdown'
-							aria-haspopup='true'
-							aria-expanded='false'
-						>
-							<i className='fas fa-list'>
-								<span className='header-authenticated__left__board__text'>
-									Boards
-								</span>
-							</i>
-						</button>
-						<div
-							className='dropdown-menu dropdown-menu-board'
-							aria-labelledby='dropdownBoardButton'
-						>
-							<h3 className='dropdown-header dropdown-header-board'>
-								Recent Boards
-							</h3>
-							<div className='dropdown-divider'></div>
-							{this.props.projects.map(p => (
-								<Link
-									key={p.projectIdentifier}
-									to={`/projectBoard/${p.projectIdentifier}`}
-									onClick={() => this.onClickProjectLink(p)}
-									className='dropdown-item dropdown-item-board'
-								>
-									{p.projectName}
-								</Link>
-							))}
-						</div>
-					</div>
-				</div>
-
-				<div className='header-authenticated__middle'>
-					<div className='header-authenticated__middle__title'>
+					<div className='header-authenticated__left__left'>
 						<Link to='/dashboard'>
-							<h2>Trello Clone</h2>
+							<div className='header-authenticated__left__left__home header-icon'>
+								<i className='fas fa-home' />
+							</div>
 						</Link>
+
+						<div className='dropdown'>
+							<button
+								className='header-authenticated__left__left__board header-icon'
+								type='button'
+								id='dropdownBoardButton'
+								data-toggle='dropdown'
+								aria-haspopup='true'
+								aria-expanded='false'
+							>
+								<i className='fas fa-list'>
+									<span className='header-authenticated__left__left__board__text'>
+										Boards
+									</span>
+								</i>
+							</button>
+							<div
+								className='dropdown-menu dropdown-menu-board'
+								aria-labelledby='dropdownBoardButton'
+							>
+								<h3 className='dropdown-header dropdown-header-board'>
+									Recent Boards
+								</h3>
+								<div className='dropdown-divider'></div>
+								{this.props.projects.map(p => (
+									<Link
+										key={p.projectIdentifier}
+										to={`/projectBoard/${p.projectIdentifier}`}
+										onClick={() => this.onClickProjectLink(p)}
+										className='dropdown-item dropdown-item-board'
+									>
+										{p.projectName}
+									</Link>
+								))}
+							</div>
+						</div>
+					</div>
+					<div className='header-authenticated__left__middle'>
+						<Link
+							to='/dashboard'
+							className='header-authenticated__left__middle__title'
+						></Link>
 					</div>
 				</div>
+
+				{/* <div className='header-authenticated__middle'></div> */}
 
 				<div className='header-authenticated__right'>
 					<div className='dropdown'>
