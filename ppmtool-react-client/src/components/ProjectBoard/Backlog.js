@@ -15,12 +15,12 @@ class Backlog extends Component {
 		columns: {
 			TODO: {
 				id: 'TODO',
-				title: 'To do',
+				title: 'To Do',
 				taskIds: []
 			},
 			IN_PROGRESS: {
 				id: 'IN_PROGRESS',
-				title: 'In progress',
+				title: 'In Progress',
 				taskIds: []
 			},
 			DONE: {
@@ -72,13 +72,8 @@ class Backlog extends Component {
 		}));
 	}
 
-	// TODO: Put Backlog into redux
-	componentDidUpdate() {
-		if (
-			this.state.tasks.length !== this.props.projectTasks.length ||
-			this.state.tasks[0].projectIdentifier !==
-				this.props.projectTasks[0].projectIdentifier
-		) {
+	componentDidUpdate(prevProps) {
+		if (prevProps.projectTasks !== this.props.projectTasks) {
 			const { projectTasks } = this.props;
 			const newTodoTasksIds = [];
 			const newInProgressTasksIds = [];
