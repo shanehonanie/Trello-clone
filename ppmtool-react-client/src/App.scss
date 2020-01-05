@@ -316,25 +316,40 @@ a {
 .task-item {
 	display: flex;
 	justify-content: space-between;
+	min-height: 56px;
 	color: var(--color-blue-dark-1);
-	p {
-	}
 
 	&__icon-list {
-		display: flex;
-		flex-direction: column;
+		display: none;
 
 		&__edit {
 			color: var(--color-blue-2);
-			margin-bottom: 0.8rem;
+			margin-bottom: 0.2rem;
+			padding: 0.4rem;
 			cursor: pointer;
+
+			&:hover {
+				background-color: var(--color-grey-light-3);
+				border-radius: 5px;
+			}
 		}
 
 		&__remove {
 			color: darkred;
+			padding: 0.4rem;
 			cursor: pointer;
+
+			&:hover {
+				background-color: var(--color-grey-light-3);
+				border-radius: 5px;
+			}
 		}
 	}
+}
+
+.task-item:hover .task-item__icon-list {
+	display: flex;
+	flex-direction: column;
 }
 
 .popup-task {
