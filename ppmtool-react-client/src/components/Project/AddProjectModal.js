@@ -15,10 +15,10 @@ export class AddProjectModal extends Component {
 		errors: {}
 	};
 
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.errors) {
-			this.setState({ errors: nextProps.errors });
-		}
+	static getDerivedStateFromProps(nextProps, prevState) {
+		if (nextProps.errors !== prevState.errors) {
+			return { errors: nextProps.errors };
+		} else return null;
 	}
 
 	onChange = e => {
@@ -41,6 +41,7 @@ export class AddProjectModal extends Component {
 			end_date: this.state.end_date
 		};
 		this.props.createProject(newProject);
+
 		this.resetState();
 		this.onClose(e);
 	};

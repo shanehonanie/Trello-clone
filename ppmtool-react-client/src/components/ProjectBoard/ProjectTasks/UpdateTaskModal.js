@@ -15,44 +15,29 @@ class UpdateTaskModal extends Component {
 		errors: {}
 	};
 
-	componentDidMount() {
-		// console.log('UpdateTaskModal componentDidMount', this.props.project);
+	componentDidUpdate(prevProps) {
+		if (
+			prevProps.project !== this.props.project &&
+			this.props.project !== undefined
+		) {
+			this.setState({
+				summary: this.props.project.summary,
+				acceptanceCriteria: this.props.project.acceptanceCriteria,
+				status: this.props.project.status,
+				priority: this.props.project.priority,
+				dueDate: this.props.project.dueDate,
+				id: this.props.project.id,
+				projectSequence: this.props.project.projectSequence,
+				projectIdentifier: this.props.project.projectIdentifier,
+				create_At: this.props.project.create_At
+			});
+		}
 	}
 
-	// TODO: Replace with getDerivedStateFromProps & componentDidUpdate for React 17
-	componentWillReceiveProps(nextProps) {
-		// console.log('UpdateTaskModal nextProps.project', nextProps.project);
-		// console.log('UpdateTaskModal this.props.project', this.props.project);
-
-		if (
-			nextProps.project !== this.props.project &&
-			nextProps.project !== undefined
-		) {
-			// console.log('UpdateTaskModal nextProps.project', nextProps.project);
-			// console.log('UpdateTaskModal this.props.project', this.props.project);
-			// console.log(
-			// 	'nextProps.project === undefined',
-			// 	nextProps.project === undefined
-			// );
-
-			this.setState({
-				summary: nextProps.project.summary,
-				acceptanceCriteria: nextProps.project.acceptanceCriteria,
-				status: nextProps.project.status,
-				priority: nextProps.project.priority,
-				dueDate: nextProps.project.dueDate,
-				id: nextProps.project.id,
-				projectSequence: nextProps.project.projectSequence,
-				projectIdentifier: nextProps.project.projectIdentifier,
-				create_At: nextProps.project.create_At
-			});
-		}
-
-		if (nextProps.errors !== this.props.errors) {
-			this.setState({
-				errors: nextProps.errors
-			});
-		}
+	static getDerivedStateFromProps(nextProps, prevState) {
+		if (nextProps.errors !== prevState.errors) {
+			return { errors: nextProps.errors };
+		} else return null;
 	}
 
 	onChange = e => {

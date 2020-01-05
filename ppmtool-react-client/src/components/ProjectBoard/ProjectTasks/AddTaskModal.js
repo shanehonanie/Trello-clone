@@ -17,10 +17,10 @@ class AddTaskModal extends Component {
 		errors: {}
 	};
 
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.errors) {
-			this.setState({ errors: nextProps.errors });
-		}
+	static getDerivedStateFromProps(nextProps, prevState) {
+		if (nextProps.errors !== prevState.errors) {
+			return { errors: nextProps.errors };
+		} else return null;
 	}
 
 	onChange = e => {
@@ -62,7 +62,6 @@ class AddTaskModal extends Component {
 	};
 
 	render() {
-		const { projectId } = this.props;
 		const { errors } = this.state;
 
 		if (!this.props.show) {

@@ -22,14 +22,16 @@ class Login extends Component {
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.security.validToken) {
+	componentDidUpdate() {
+		if (this.props.security.validToken) {
 			this.props.history.push('/dashboard');
 		}
+	}
 
-		if (nextProps.errors) {
-			this.setState({ errors: nextProps.errors });
-		}
+	static getDerivedStateFromProps(nextProps, prevState) {
+		if (nextProps.errors !== prevState.errors) {
+			return { errors: nextProps.errors };
+		} else return null;
 	}
 
 	onSubmit = e => {

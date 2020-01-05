@@ -22,21 +22,20 @@ class ProjectBoard extends Component {
 	};
 
 	componentDidMount() {
-		// console.log('ProjectBoard.js componentDidMount');
 		const { id } = this.props.match.params;
 		this.props.getBacklog(id);
 	}
-
-	componentWillReceiveProps(nextProps) {
-		// console.log('ProjectBoard.js componentWillReceiveProps');
-		if (this.props.errors !== nextProps.errors) {
-			this.setState({ errors: nextProps.errors });
-		}
-
-		if (this.props.match.params.id !== nextProps.match.params.id) {
-			const { id } = nextProps.match.params;
+	componentDidUpdate(prevProps) {
+		if (this.props.match.params.id !== prevProps.match.params.id) {
+			const { id } = this.props.match.params;
 			this.props.getBacklog(id);
 		}
+	}
+
+	static getDerivedStateFromProps(nextProps, prevState) {
+		if (nextProps.errors !== prevState.errors) {
+			return { errors: nextProps.errors };
+		} else return null;
 	}
 
 	toggleAddModal = e => {

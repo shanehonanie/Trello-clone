@@ -33,7 +33,6 @@ class Backlog extends Component {
 	};
 
 	componentDidMount() {
-		// console.log('Backlog.js componentDidMount');
 		const { projectTasks } = this.props;
 
 		const newTodoTasksIds = [];
@@ -73,46 +72,48 @@ class Backlog extends Component {
 		}));
 	}
 
-	componentWillReceiveProps(nextProps) {
-		// console.log('Backlog.js componentWillReceiveProps');
-		// TODO: Optimize updating state?? instead of or repopulate entire state?
-		const { projectTasks } = nextProps;
-
-		const newTodoTasksIds = [];
-		const newInProgressTasksIds = [];
-		const newDoneTasksIds = [];
-
-		for (let i = 0; i < projectTasks.length; i++) {
-			if (projectTasks[i].status === 'TODO') {
-				newTodoTasksIds.push(projectTasks[i].projectSequence);
-			}
-			if (projectTasks[i].status === 'IN_PROGRESS') {
-				newInProgressTasksIds.push(projectTasks[i].projectSequence);
-			}
-			if (projectTasks[i].status === 'DONE') {
-				newDoneTasksIds.push(projectTasks[i].projectSequence);
-			}
-		}
-
-		this.setState(prevState => ({
-			...prevState,
-			tasks: [...projectTasks],
-			columns: {
-				...prevState.columns,
-				TODO: {
-					...prevState.columns.TODO,
-					taskIds: newTodoTasksIds
-				},
-				IN_PROGRESS: {
-					...prevState.columns.IN_PROGRESS,
-					taskIds: newInProgressTasksIds
-				},
-				DONE: {
-					...prevState.columns.DONE,
-					taskIds: newDoneTasksIds
+	// TODO: Put Backlog into redux
+	componentDidUpdate() {
+		if (
+			this.state.tasks.length !== this.props.projectTasks.length ||
+			this.state.tasks[0].projectIdentifier !==
+				this.props.projectTasks[0].projectIdentifier
+		) {
+			const { projectTasks } = this.props;
+			const newTodoTasksIds = [];
+			const newInProgressTasksIds = [];
+			const newDoneTasksIds = [];
+			for (let i = 0; i < projectTasks.length; i++) {
+				if (projectTasks[i].status === 'TODO') {
+					newTodoTasksIds.push(projectTasks[i].projectSequence);
+				}
+				if (projectTasks[i].status === 'IN_PROGRESS') {
+					newInProgressTasksIds.push(projectTasks[i].projectSequence);
+				}
+				if (projectTasks[i].status === 'DONE') {
+					newDoneTasksIds.push(projectTasks[i].projectSequence);
 				}
 			}
-		}));
+			this.setState(prevState => ({
+				...prevState,
+				tasks: [...projectTasks],
+				columns: {
+					...prevState.columns,
+					TODO: {
+						...prevState.columns.TODO,
+						taskIds: newTodoTasksIds
+					},
+					IN_PROGRESS: {
+						...prevState.columns.IN_PROGRESS,
+						taskIds: newInProgressTasksIds
+					},
+					DONE: {
+						...prevState.columns.DONE,
+						taskIds: newDoneTasksIds
+					}
+				}
+			}));
+		}
 	}
 
 	onUpdateTaskStatus = (taskToUpdate, newStatus) => {
@@ -170,9 +171,6 @@ class Backlog extends Component {
 
 		// else : move between different columns
 		const startTaskIds = Array.from(start.taskIds);
-		// console.log('Backlog.js startTaskIds', startTaskIds);
-		// console.log('Backlog.js source.droppableId', source.droppableId);
-		// console.log('Backlog.js source.index', source.index);
 		this.onUpdateTaskStatus(
 			startTaskIds[source.index],
 			destination.droppableId
@@ -187,8 +185,6 @@ class Backlog extends Component {
 		};
 
 		const finishTaskIds = Array.from(finish.taskIds);
-		// console.log('Backlog.js finishTaskIds', finishTaskIds);
-		// console.log('Backlog.js destination.droppableId', destination.droppableId);
 		finishTaskIds.splice(destination.index, 0, draggableId); // insert one into dest. loc.
 
 		// for updating destination column state

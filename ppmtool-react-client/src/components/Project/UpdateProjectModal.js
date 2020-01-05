@@ -16,35 +16,23 @@ class UpdateProjectModal extends Component {
 		errors: {}
 	};
 
-	componentDidMount() {
-		// console.log(
-		// 	'UpdateProjectModal componentDidMount this.props.project',
-		// 	this.props.project
-		// );
+	componentDidUpdate(prevProps) {
+		if (prevProps.project !== this.props.project) {
+			this.setState({
+				id: this.props.project.id,
+				projectName: this.props.project.projectName,
+				projectIdentifier: this.props.project.projectIdentifier,
+				description: this.props.project.description,
+				start_date: this.props.project.start_date,
+				end_date: this.props.project.end_date
+			});
+		}
 	}
 
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.errors) {
-			this.setState({ errors: nextProps.errors });
-		}
-
-		const {
-			id,
-			projectName,
-			projectIdentifier,
-			description,
-			start_date,
-			end_date
-		} = nextProps.project;
-
-		this.setState({
-			id,
-			projectName,
-			projectIdentifier,
-			description,
-			start_date,
-			end_date
-		});
+	static getDerivedStateFromProps(nextProps, prevState) {
+		if (nextProps.errors !== prevState.errors) {
+			return { errors: nextProps.errors };
+		} else return null;
 	}
 
 	onChange = e => {
