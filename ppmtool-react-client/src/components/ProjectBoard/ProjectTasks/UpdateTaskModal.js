@@ -89,7 +89,7 @@ class UpdateTaskModal extends Component {
 						&times;
 					</button>
 					<div className='container'>
-						<h1>Update Task Modal</h1>
+						<h3 className='row mt-4 justify-content-center'>Update Task </h3>
 						<form onSubmit={this.onSubmit}>
 							<div className='form-group'>
 								<h6 className='mt-3'>Description</h6>
