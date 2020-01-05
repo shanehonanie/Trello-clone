@@ -611,3 +611,9 @@ input[type='submit'],
 button {
 	font: inherit;
 }
+
+// Disabled Button
+.btn.btn-primary:disabled {
+	background-color: lightgrey;
+	color: black;
+}
