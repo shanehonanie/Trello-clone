@@ -11,8 +11,7 @@ class UpdateTaskModal extends Component {
 		id: '',
 		projectSequence: '',
 		projectIdentifier: '',
-		create_At: '',
-		errors: {}
+		create_At: ''
 	};
 
 	componentDidUpdate(prevProps) {
@@ -21,23 +20,17 @@ class UpdateTaskModal extends Component {
 			this.props.project !== undefined
 		) {
 			this.setState({
-				summary: this.props.project.summary,
-				acceptanceCriteria: this.props.project.acceptanceCriteria,
-				status: this.props.project.status,
-				priority: this.props.project.priority,
-				dueDate: this.props.project.dueDate,
-				id: this.props.project.id,
-				projectSequence: this.props.project.projectSequence,
-				projectIdentifier: this.props.project.projectIdentifier,
-				create_At: this.props.project.create_At
+				summary: this.props.project.summary || '',
+				acceptanceCriteria: this.props.project.acceptanceCriteria || '',
+				status: this.props.project.status || '',
+				priority: this.props.project.priority || '',
+				dueDate: this.props.project.dueDate || '',
+				id: this.props.project.id || '',
+				projectSequence: this.props.project.projectSequence || '',
+				projectIdentifier: this.props.project.projectIdentifier || '',
+				create_At: this.props.project.create_At || ''
 			});
 		}
-	}
-
-	static getDerivedStateFromProps(nextProps, prevState) {
-		if (nextProps.errors !== prevState.errors) {
-			return { errors: nextProps.errors };
-		} else return null;
 	}
 
 	onChange = e => {
@@ -47,8 +40,6 @@ class UpdateTaskModal extends Component {
 	onClose = e => {
 		e.preventDefault();
 		this.props.onClose && this.props.onClose(e);
-		// console.log('this.props.onClose', this.props.onClose);
-		// console.log('this.props.onClose(e)', this.props.onClose(e));
 	};
 
 	onSubmit = e => {
@@ -70,27 +61,26 @@ class UpdateTaskModal extends Component {
 		this.onClose(e);
 	};
 
-	render() {
-		// console.log('Check this.props.project', this.props.project);
+	validate = (summary, dueDate) => {
+		return {
+			summary: summary.length === 0 ? 'Enter 1 or more characters' : '',
+			dueDate: dueDate === '' ? 'Enter a valid date' : ''
+		};
+	};
 
+	render() {
 		if (!this.props.project || this.props.project === undefined) {
-			// console.log('return null inside updatetaskmodal');
 			return null;
 		}
 
-		const {
-			summary,
-			acceptanceCriteria,
-			status,
-			priority,
-			dueDate
-			// errors
-		} = this.state;
+		const { summary, status, dueDate } = this.state;
 
-		// console.log('this.props.show', this.props.show);
 		if (!this.props.show) {
 			return null;
 		}
+
+		const errors = this.validate(this.state.summary, this.state.dueDate);
+		const isEnabled = !Object.keys(errors).some(x => errors[x] !== '');
 
 		return (
 			<div className='popup-task'>
@@ -98,71 +88,62 @@ class UpdateTaskModal extends Component {
 					<button className='popup-task__content__close' onClick={this.onClose}>
 						&times;
 					</button>
-					<form onSubmit={this.onSubmit}>
-						<div className='form-group'>
-							<input
-								type='text'
-								// className={classnames('form-control form-control-lg', {
-								// 	'is-invalid': errors.summary
-								// })}
-								name='summary'
-								placeholder='Project Task summary'
-								value={summary}
-								onChange={this.onChange}
-							/>
-							{/* {errors.summary && (
-								<div className='invalid-feedback'>{errors.summary}</div>
-							)} */}
-						</div>
-						<div className='form-group'>
-							<textarea
-								className='form-control form-control-lg'
-								placeholder='Acceptance Criteria'
-								name='acceptanceCriteria'
-								value={acceptanceCriteria}
-								onChange={this.onChange}
-							/>
-						</div>
-						<h6>Due Date</h6>
-						<div className='form-group'>
-							<input
-								type='date'
-								className='form-control form-control-lg'
-								name='dueDate'
-								value={dueDate}
-								onChange={this.onChange}
-							/>
-						</div>
-						<div className='form-group'>
-							<select
-								className='form-control form-control-lg'
-								name='priority'
-								value={priority}
-								onChange={this.onChange}
-							>
-								<option value={0}>Select Priority</option>
-								<option value={1}>High</option>
-								<option value={2}>Medium</option>
-								<option value={3}>Low</option>
-							</select>
-						</div>
+					<div className='container'>
+						<h1>Update Task Modal</h1>
+						<form onSubmit={this.onSubmit}>
+							<div className='form-group'>
+								<h6 className='mt-3'>Description</h6>
+								<textarea
+									className={classnames('form-control form-control-lg', {
+										'is-invalid': errors.summary
+									})}
+									name='summary'
+									placeholder='Summary...'
+									value={summary}
+									onChange={this.onChange}
+								/>
+								{errors.summary && (
+									<div className='invalid-feedback'>{errors.summary}</div>
+								)}
+							</div>
 
-						<div className='form-group'>
-							<select
-								className='form-control form-control-lg'
-								name='status'
-								value={status}
-								onChange={this.onChange}
-							>
-								<option value=''>Select Status</option>
-								<option value='TODO'>TODO</option>
-								<option value='IN_PROGRESS'>IN PROGRESS</option>
-								<option value='DONE'>DONE</option>
-							</select>
-						</div>
+							<div className='form-group'>
+								<h6 className='mt-3'>Due Date</h6>
+								<input
+									type='date'
+									className={classnames('form-control form-control-lg', {
+										'is-invalid': errors.dueDate
+									})}
+									name='dueDate'
+									value={dueDate}
+									onChange={this.onChange}
+								/>
+								{errors.dueDate && (
+									<div className='invalid-feedback'>{errors.dueDate}</div>
+								)}
+							</div>
 
-						<input type='submit' className='btn btn-primary btn-block mt-4' />
-					</form>
+							<div className='form-group'>
+								<h6 className='mt-3'>Status</h6>
+								<select
+									className='form-control form-control-lg'
+									name='status'
+									value={status}
+									onChange={this.onChange}
+								>
+									<option value='TODO'>TODO</option>
+									<option value='IN_PROGRESS'>IN PROGRESS</option>
+									<option value='DONE'>DONE</option>
+								</select>
+							</div>
+
+							<input
+								type='submit'
+								className='btn btn-primary btn-block'
+								disabled={!isEnabled}
+							/>
+						</form>
+					</div>
 				</div>
 			</div>
 		);
