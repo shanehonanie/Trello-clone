@@ -13,15 +13,17 @@ class AddTaskModal extends Component {
 		priority: 0,
 		dueDate: '',
 		projectIdentifier: this.props.projectId,
-
-		errors: {}
+		touched: {
+			summary: false,
+			dueDate: false
+		}
 	};
 
-	static getDerivedStateFromProps(nextProps, prevState) {
-		if (nextProps.errors !== prevState.errors) {
-			return { errors: nextProps.errors };
-		} else return null;
-	}
+	handleBlur = field => e => {
+		this.setState({
+			touched: { ...this.state.touched, [field]: true }
+		});
+	};
 
 	onChange = e => {
 		this.setState({ [e.target.name]: e.target.value });
@@ -30,8 +32,6 @@ class AddTaskModal extends Component {
 	onClose = e => {
 		e.preventDefault();
 		this.props.onClose && this.props.onClose(e);
-		// console.log('this.props.onClose', this.props.onClose);
-		// console.log('this.props.onClose(e)', this.props.onClose(e));
 	};
 
 	onSubmit = e => {
@@ -57,89 +57,106 @@ class AddTaskModal extends Component {
 			status: '',
 			priority: 0,
 			dueDate: '',
-			projectIdentifier: this.props.projectId
+			projectIdentifier: this.props.projectId,
+			touched: {
+				summary: false,
+				dueDate: false
+			}
 		});
 	};
 
+	validate = (summary, dueDate) => {
+		return {
+			summary: summary.length === 0 ? 'Enter 1 or more characters' : '',
+			dueDate: dueDate === '' ? 'Enter a valid date' : ''
+		};
+	};
+
 	render() {
-		const { errors } = this.state;
+		const { summary, dueDate } = this.state;
 
 		if (!this.props.show) {
 			return null;
 		}
+
+		const errors = this.validate(summary, dueDate);
+		const isEnabled = !Object.keys(errors).some(x => errors[x] !== '');
+
+		const shouldMarkError = field => {
+			const hasError = errors[field] !== '';
+			const shouldShow = this.state.touched[field];
+
+			return hasError ? shouldShow : false;
+		};
+
 		return (
 			<div className='popup-task'>
 				<div className='popup-task__content'>
 					<button className='popup-task__content__close' onClick={this.onClose}>
 						&times;
 					</button>
-					<h4 className='display-4 text-center'>Add Project Task</h4>
-					<p className='lead text-center'>Project Name + Project Code</p>
-					<form onSubmit={this.onSubmit}>
-						<div className='form-group'>
-							<input
-								type='text'
-								className={classnames('form-control form-control-lg', {
-									'is-invalid': errors.summary
-								})}
-								name='summary'
-								placeholder='Project Task summary'
-								value={this.state.summary}
-								onChange={this.onChange}
-							/>
-							{errors.summary && (
-								<div className='invalid-feedback'>{errors.summary}</div>
-							)}
-						</div>
-						<div className='form-group'>
-							<textarea
-								className='form-control form-control-lg'
-								placeholder='Acceptance Criteria'
-								name='acceptanceCriteria'
-								value={this.state.acceptanceCriteria}
-								onChange={this.onChange}
-							/>
-						</div>
-						<h6>Due Date</h6>
-						<div className='form-group'>
-							<input
-								type='date'
-								className='form-control form-control-lg'
-								name='dueDate'
-								value={this.state.dueDate}
-								onChange={this.onChange}
-							/>
-						</div>
-						<div className='form-group'>
-							<select
-								className='form-control form-control-lg'
-								name='priority'
-								value={this.state.priority}
-								onChange={this.onChange}
-							>
-								<option value={0}>Select Priority</option>
-								<option value={1}>High</option>
-								<option value={2}>Medium</option>
-								<option value={3}>Low</option>
-							</select>
-						</div>
+					<div className='container'>
+						<h3 className='row mt-4 justify-content-center'>Add Task </h3>
+						<form onSubmit={this.onSubmit}>
+							<div className='form-group'>
+								<h6>Description</h6>
+								<textarea
+									type='text'
+									className={classnames('form-control form-control-lg', {
+										'is-invalid': shouldMarkError('summary')
+											? errors.summary
+											: null
+									})}
+									name='summary'
+									placeholder='Description...'
+									value={summary}
+									onChange={this.onChange}
+									onBlur={this.handleBlur('summary')}
+								/>
+								{shouldMarkError('summary') && errors.summary && (
+									<div className='invalid-feedback'>{errors.summary}</div>
+								)}
+							</div>
 
-						<div className='form-group'>
-							<select
-								className='form-control form-control-lg'
-								name='status'
-								value={this.state.status}
-								onChange={this.onChange}
-							>
-								<option value=''>Select Status</option>
-								<option value='TODO'>TODO</option>
-								<option value='IN_PROGRESS'>IN PROGRESS</option>
-								<option value='DONE'>DONE</option>
-							</select>
-						</div>
+							<div className='form-group'>
+								<h6>Due Date</h6>
+								<input
+									type='date'
+									className={classnames('form-control form-control-lg', {
+										'is-invalid': shouldMarkError('dueDate')
+											? errors.dueDate
+											: null
+									})}
+									name='dueDate'
+									value={dueDate}
+									onChange={this.onChange}
+									onBlur={this.handleBlur('dueDate')}
+								/>
+								{shouldMarkError('dueDate') && errors.dueDate && (
+									<div className='invalid-feedback'>{errors.dueDate}</div>
+								)}
+							</div>
 
-						<input type='submit' className='btn btn-primary btn-block mt-4' />
-					</form>
+							<div className='form-group'>
+								<select
+									className='form-control form-control-lg'
+									name='status'
+									value={this.state.status}
+									onChange={this.onChange}
+								>
+									<option value='TODO'>TODO</option>
+									<option value='IN_PROGRESS'>IN PROGRESS</option>
+									<option value='DONE'>DONE</option>
+								</select>
+							</div>
+
+							<input
+								type='submit'
+								className='btn btn-primary btn-block'
+								disabled={!isEnabled}
+							/>
+						</form>
+					</div>
 				</div>
 			</div>
 		);
