@@ -228,8 +228,10 @@ class Backlog extends Component {
 								column={column}
 								tasks={tasks}
 								setIdCallback={this.props.setIdCallback}
+								toggleAddModalCallback={this.props.toggleAddModalCallback}
 								toggleEditModalCallback={this.props.toggleEditModalCallback}
 								toggleDeleteModalCallback={this.props.toggleDeleteModalCallback}
+								selectedColumnCallback={this.props.selectedColumnCallback}
 							/>
 						);
 					})}

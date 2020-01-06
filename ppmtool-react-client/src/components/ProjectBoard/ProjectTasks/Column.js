@@ -18,14 +18,34 @@ const Title = styled.h3`
 	font-size: 2rem;
 `;
 const TaskList = styled.div`
-	padding: 2rem;
+	padding: 1rem;
 	transition: background-color 0.2s ease;
 	background-color: ${props => (props.isDraggingOver ? 'skyblue' : '#ebecf0')};
 	flex-grow: 1;
 	min-height: 8.5em;
 `;
 
+const AddTaskContainer = styled.div`
+	font-size: 1.5rem;
+	font-weight: 100;
+	border-radius: 3px;
+	color: #5e6c84;
+	margin: 1rem;
+	padding: 0.2rem 1.5rem;
+	cursor: pointer;
+
+	&:hover {
+		background-color: #dadce2;
+	}
+`;
+
 class Column extends Component {
+	onClick = () => {
+		// console.log('this.props.column', this.props.column.title);
+		this.props.selectedColumnCallback(this.props.column.id);
+		this.props.toggleAddModalCallback();
+	};
+
 	render() {
 		return (
 			<Container>
@@ -53,6 +73,11 @@ class Column extends Component {
 						</TaskList>
 					)}
 				</Droppable>
+				<AddTaskContainer onClick={this.onClick}>
+					<span>
+						<i className='fas fa-plus'> Add another card</i>
+					</span>
+				</AddTaskContainer>
 			</Container>
 		);
 	}

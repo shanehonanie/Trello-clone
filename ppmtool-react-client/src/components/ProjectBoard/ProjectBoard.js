@@ -18,6 +18,7 @@ class ProjectBoard extends Component {
 		showUpdateModal: false,
 		showDeleteModal: false,
 		selectedProjectId: -1,
+		selectedColumn: '',
 		errors: {}
 	};
 
@@ -75,6 +76,10 @@ class ProjectBoard extends Component {
 		this.props.updateProjectTask(updatedProjectTask);
 	};
 
+	onSetColumnCallback = columnName => {
+		this.setState({ selectedColumn: columnName });
+	};
+
 	render() {
 		const { projectTasks } = this.props.backlog;
 		const { errors } = this.state;
@@ -109,9 +114,11 @@ class ProjectBoard extends Component {
 				<Backlog
 					projectTasks={projectTasks}
 					setIdCallback={this.setSelectedProject}
+					toggleAddModalCallback={this.toggleAddModal}
 					toggleEditModalCallback={this.toggleUpdateModal}
 					toggleDeleteModalCallback={this.toggleDeleteModal}
 					onUpdateTaskCallback={this.onUpdateCallback}
+					selectedColumnCallback={this.onSetColumnCallback}
 				/>
 			);
 		};
@@ -125,6 +132,7 @@ class ProjectBoard extends Component {
 						onClose={this.toggleAddModal}
 						show={this.state.showAddModal}
 						projectId={this.props.match.params.id}
+						selectedColumn={this.state.selectedColumn}
 					/>
 					<UpdateTaskModal
 						onClose={this.toggleUpdateModal}
@@ -143,12 +151,6 @@ class ProjectBoard extends Component {
 						onDeleteTaskCallback={this.onDeleteCallback}
 						setIdCallback={this.setSelectedProject}
 					/>
-					<button
-						className='create-project-task-btn'
-						onClick={this.toggleAddModal}
-					>
-						<i className='fas fa-plus-circle'> Create Project Task</i>
-					</button>
 					{boardContent}
 				</div>
 			</div>

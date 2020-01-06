@@ -19,6 +19,11 @@ class AddTaskModal extends Component {
 		}
 	};
 
+	componentDidUpdate(prevProps) {
+		if (prevProps.selectedColumn !== this.props.selectedColumn)
+			this.setState({ status: this.props.selectedColumn });
+	}
+
 	handleBlur = field => e => {
 		this.setState({
 			touched: { ...this.state.touched, [field]: true }
