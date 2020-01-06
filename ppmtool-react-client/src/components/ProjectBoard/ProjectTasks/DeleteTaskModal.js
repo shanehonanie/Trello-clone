@@ -23,10 +23,23 @@ export class DeleteTaskModal extends Component {
 					<button className='popup-task__content__close' onClick={this.onClose}>
 						&times;
 					</button>
-					<h1>Delete Modal</h1>
-					<h3>Are you sure you want to delete?</h3>
-					<button onClick={this.onDelete}>Delete</button>
-					<button onClick={this.onClose}>Close</button>
+					<div className='container'>
+						<h3 className='row mt-4 justify-content-center'>Delete Task </h3>
+						<h5 className='row mt-4 justify-content-center'>
+							Are you sure you want to delete?
+						</h5>
+						<div className='row justify-content-center mt-4'>
+							<button
+								className='btn btn-primary mr-3 btn-lg'
+								onClick={this.onDelete}
+							>
+								Delete
+							</button>
+							<button className='btn btn-danger btn-lg' onClick={this.onClose}>
+								Close
+							</button>
+						</div>
+					</div>
 				</div>
 			</div>
 		);
