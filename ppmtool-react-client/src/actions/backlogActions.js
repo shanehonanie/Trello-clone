@@ -2,7 +2,8 @@ import axios from 'axios';
 
 import {
 	GET_BACKLOG,
-	GET_PROJECT_TASK,
+	SET_BACKLOG,
+	CLEAR_BACKLOG,
 	ADD_PROJECT_TASK,
 	UPDATE_PROJECT_TASK,
 	DELETE_PROJECT_TASK,
@@ -24,15 +25,30 @@ export const getBacklog = backlogId => async dispatch => {
 	}
 };
 
-export const getProjectTask = (backlogId, ptId, history) => async dispatch => {
+export const setBacklog = backlog => async dispatch => {
 	try {
-		const res = await axios.get(`/api/backlog/${backlogId}/${ptId}`);
 		dispatch({
-			type: GET_PROJECT_TASK,
-			payload: res.data
+			type: SET_BACKLOG,
+			payload: backlog
 		});
 	} catch (err) {
-		history.push('/dashboard');
+		dispatch({
+			type: GET_ERRORS,
+			payload: err.response.data
+		});
+	}
+};
+export const clearBacklog = () => async dispatch => {
+	try {
+		dispatch({
+			type: CLEAR_BACKLOG,
+			payload: {}
+		});
+	} catch (err) {
+		dispatch({
+			type: GET_ERRORS,
+			payload: err.response.data
+		});
 	}
 };
 

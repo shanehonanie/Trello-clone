@@ -1,6 +1,7 @@
 import {
 	GET_BACKLOG,
-	GET_PROJECT_TASK,
+	SET_BACKLOG,
+	CLEAR_BACKLOG,
 	ADD_PROJECT_TASK,
 	UPDATE_PROJECT_TASK,
 	DELETE_PROJECT_TASK
@@ -18,10 +19,15 @@ export default function(state = initialState, action) {
 				...state,
 				projectTasks: action.payload
 			};
-		case GET_PROJECT_TASK:
+		case SET_BACKLOG:
 			return {
 				...state,
 				projectTask: action.payload
+			};
+		case CLEAR_BACKLOG:
+			return {
+				...state,
+				projectTask: {}
 			};
 		case ADD_PROJECT_TASK:
 			return {
@@ -32,7 +38,6 @@ export default function(state = initialState, action) {
 			const index = state.projectTasks.findIndex(
 				p => p.id === action.payload.id
 			);
-			console.log('backlogReducer.js UPDATE_PROJECT_TASK index', index);
 			return {
 				...state,
 				projectTasks: [
