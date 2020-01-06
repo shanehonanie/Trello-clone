@@ -25,10 +25,10 @@ class ProjectBoard extends Component {
 		const { id } = this.props.match.params;
 		this.props.getBacklog(id);
 	}
+
 	componentDidUpdate(prevProps) {
 		if (this.props.match.params.id !== prevProps.match.params.id) {
-			const { id } = this.props.match.params;
-			this.props.getBacklog(id);
+			this.props.getBacklog(this.props.match.params);
 		}
 	}
 
@@ -73,12 +73,9 @@ class ProjectBoard extends Component {
 
 	onUpdateCallback = updatedProjectTask => {
 		this.props.updateProjectTask(updatedProjectTask);
-		// TODO: implement toggle instead of reload page to update
-		// this.toggleUpdateModal();
 	};
 
 	render() {
-		// const { id } = this.props.match.params;
 		const { projectTasks } = this.props.backlog;
 		const { errors } = this.state;
 
