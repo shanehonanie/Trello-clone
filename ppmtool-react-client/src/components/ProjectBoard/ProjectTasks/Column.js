@@ -15,19 +15,23 @@ const Container = styled.div`
 `;
 const Title = styled.h3`
 	padding: 1rem;
-	font-size: 2rem;
+	font-size: 1.6rem;
+	color: #172b4d;
+	font-weight: 500;
 `;
 const TaskList = styled.div`
 	padding: 1rem;
 	transition: background-color 0.2s ease;
-	background-color: ${props => (props.isDraggingOver ? 'skyblue' : '#ebecf0')};
+	// background-color: ${props => (props.isDraggingOver ? 'skyblue' : '#ebecf0')};
+	background-color: #ebecf0;
 	flex-grow: 1;
 	min-height: 8.5em;
 `;
 
 const AddTaskContainer = styled.div`
-	font-size: 1.5rem;
+	font-family: Book Antiqua;
 	font-weight: 100;
+	font-size: 1.4rem;
 	border-radius: 3px;
 	color: #5e6c84;
 	margin: 1rem;
@@ -75,7 +79,7 @@ class Column extends Component {
 				</Droppable>
 				<AddTaskContainer onClick={this.onClick}>
 					<span>
-						<i className='fas fa-plus'> Add another card</i>
+						<i className='fas fa-plus'> Add new task</i>
 					</span>
 				</AddTaskContainer>
 			</Container>

@@ -12,8 +12,14 @@ const Container = styled.div`
 	border-radius: 2px;
 	padding: 8px;
 	margin-bottom: 8px;
-	background-color: ${props => (props.isDragging ? 'lightgreen' : 'white')};
+	background-color: ${props => (props.isDragging ? 'skyblue' : '#fff')};
+	// background-color: #fff;
 	border-radius: 5px;
+	box-shadow: 0 1px 0 rgba(9, 30, 66, 0.25);
+
+	&:hover {
+		background-color: #f4f5f7;
+	}
 `;
 
 class ProjectTask extends Component {
