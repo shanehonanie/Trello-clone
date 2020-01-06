@@ -101,13 +101,14 @@ class ProjectBoard extends Component {
 							{errors.projectIdentifier}
 						</div>
 					);
-				} else {
-					return (
-						<div className='alert alert-info text-center' role='alert'>
-							No Project Tasks on this board
-						</div>
-					);
 				}
+				// else {
+				// 	return (
+				// 		<div className='alert alert-info text-center' role='alert'>
+				// 			No Project Tasks on this board
+				// 		</div>
+				// 	);
+				// }
 			}
 
 			return (
