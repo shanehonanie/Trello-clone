@@ -320,12 +320,12 @@ a {
 	color: var(--color-blue-dark-1);
 
 	&__icon-list {
-		display: none;
-
+		min-width: 22.6px;
 		&__edit {
 			color: var(--color-blue-2);
 			margin-bottom: 0.2rem;
 			padding: 0.4rem;
+			display: none;
 			cursor: pointer;
 
 			&:hover {
@@ -337,6 +337,7 @@ a {
 		&__remove {
 			color: darkred;
 			padding: 0.4rem;
+			display: none;
 			cursor: pointer;
 
 			&:hover {
@@ -347,7 +348,12 @@ a {
 	}
 }
 
-.task-item:hover .task-item__icon-list {
+.task-item:hover .task-item__icon-list__edit {
+	display: flex;
+	flex-direction: column;
+}
+
+.task-item:hover .task-item__icon-list__remove {
 	display: flex;
 	flex-direction: column;
 }
