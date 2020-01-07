@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import demoData from '../components/ProjectBoard/ProjectTasks/demo-data';
+
 import {
 	GET_BACKLOG,
 	SET_BACKLOG,
@@ -16,6 +18,20 @@ export const getBacklog = backlogId => async dispatch => {
 		dispatch({
 			type: GET_BACKLOG,
 			payload: res.data
+		});
+	} catch (err) {
+		dispatch({
+			type: GET_ERRORS,
+			payload: err.response.data
+		});
+	}
+};
+
+export const getBacklogForDemo = () => async dispatch => {
+	try {
+		dispatch({
+			type: GET_BACKLOG,
+			payload: demoData.tasks
 		});
 	} catch (err) {
 		dispatch({
@@ -69,7 +85,7 @@ export const addProjectTask = (backlogId, projectTask) => async dispatch => {
 
 export const updateProjectTask = projectTask => async dispatch => {
 	try {
-		console.log('backlogActions.js updateProjectTask projectTask', projectTask);
+		// console.log('backlogActions.js updateProjectTask projectTask', projectTask);
 		const res = await axios.patch(
 			`/api/backlog/${projectTask.projectIdentifier}/${projectTask.projectSequence}`,
 			projectTask

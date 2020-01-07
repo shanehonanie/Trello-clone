@@ -51,7 +51,11 @@ function App() {
 				}
 				<Switch>
 					<Route exact path='/dashboard' component={Dashboard} />
-					<Route exact path='/projectBoard/:id' component={ProjectBoard} />
+					<Route
+						exact
+						path='/projectBoard/:id'
+						render={props => <ProjectBoard {...props} isDemo={false} />}
+					/>
 				</Switch>
 			</BrowserRouter>
 		</Provider>

@@ -34,7 +34,7 @@ class Backlog extends Component {
 
 	componentDidMount() {
 		const { projectTasks } = this.props;
-
+		// console.log(projectTasks);
 		const newTodoTasksIds = [];
 		const newInProgressTasksIds = [];
 		const newDoneTasksIds = [];

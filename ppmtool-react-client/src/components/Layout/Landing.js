@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import ProjectBoard from '../ProjectBoard/ProjectBoard';
 
 class Landing extends Component {
 	componentDidMount() {
@@ -11,9 +12,10 @@ class Landing extends Component {
 
 	render() {
 		return (
-			<div>
-				<h1>TODO: Add Demo</h1>
-			</div>
+			// <div>
+			// 	<h1>TODO: Add Demo</h1>
+			// </div>
+			<ProjectBoard isDemo={true} />
 		);
 	}
 }

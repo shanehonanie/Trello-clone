@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Backlog from './Backlog';
 import {
 	getBacklog,
+	getBacklogForDemo,
 	updateProjectTask,
 	deleteProjectTask
 } from '../../actions/backlogActions';
@@ -23,12 +24,24 @@ class ProjectBoard extends Component {
 	};
 
 	componentDidMount() {
-		const { id } = this.props.match.params;
-		this.props.getBacklog(id);
+		// console.log('componentDidMount this.props.isDemo', this.props.isDemo);
+		if (!this.props.isDemo) {
+			const { id } = this.props.match.params;
+			this.props.getBacklog(id);
+		} else {
+			this.props.getBacklogForDemo();
+		}
 	}
 
 	componentDidUpdate(prevProps) {
-		if (this.props.match.params.id !== prevProps.match.params.id) {
+		if (
+			!this.props.isDemo &&
+			this.props.match.params.id !== prevProps.match.params.id
+		) {
+			// console.log(
+			// 	'componentDidUpdate this.props.match.params',
+			// 	this.props.match.params
+			// );
 			this.props.getBacklog(this.props.match.params);
 		}
 	}
@@ -102,13 +115,6 @@ class ProjectBoard extends Component {
 						</div>
 					);
 				}
-				// else {
-				// 	return (
-				// 		<div className='alert alert-info text-center' role='alert'>
-				// 			No Project Tasks on this board
-				// 		</div>
-				// 	);
-				// }
 			}
 
 			return (
@@ -125,6 +131,7 @@ class ProjectBoard extends Component {
 		};
 
 		boardContent = boardAlgorithm(errors, projectTasks);
+		const projId = this.props.isDemo ? 'TDEV' : this.props.match.params.id;
 
 		return (
 			<div className='container-background-blue'>
@@ -132,7 +139,7 @@ class ProjectBoard extends Component {
 					<AddTaskModal
 						onClose={this.toggleAddModal}
 						show={this.state.showAddModal}
-						projectId={this.props.match.params.id}
+						projectId={projId}
 						selectedColumn={this.state.selectedColumn}
 					/>
 					<UpdateTaskModal
@@ -173,6 +180,7 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
 	getBacklog,
+	getBacklogForDemo,
 	updateProjectTask,
 	deleteProjectTask
 })(ProjectBoard);
