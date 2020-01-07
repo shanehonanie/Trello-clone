@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-import { addProjectTask } from '../../../actions/backlogActions';
+import {
+	addProjectTask,
+	addProjectTaskForDemo
+} from '../../../actions/backlogActions';
 
 class AddTaskModal extends Component {
 	state = {
@@ -20,7 +23,10 @@ class AddTaskModal extends Component {
 	};
 
 	componentDidUpdate(prevProps) {
-		if (prevProps.selectedColumn !== this.props.selectedColumn)
+		if (
+			prevProps.selectedColumn !== this.props.selectedColumn ||
+			(this.state.status === '' && this.props.selectedColumn !== '')
+		)
 			this.setState({ status: this.props.selectedColumn });
 	}
 
@@ -50,7 +56,15 @@ class AddTaskModal extends Component {
 			dueDate: this.state.dueDate
 		};
 
-		this.props.addProjectTask(this.state.projectIdentifier, newTask);
+		console.log('AddtaskModal onSubmit this.props.isDemo', this.props.isDemo);
+
+		if (!this.props.isDemo) {
+			this.props.addProjectTask(this.state.projectIdentifier, newTask);
+		} else {
+			this.props.addProjectTaskForDemo(this.state.projectIdentifier, newTask);
+			console.log('this.state.status', this.state.status);
+			console.log('this.props.selectedColumn', this.props.selectedColumn);
+		}
 		this.resetState();
 		this.onClose(e);
 	};
@@ -177,4 +191,7 @@ const mapStateToProps = state => ({
 	errors: state.errors
 });
 
-export default connect(mapStateToProps, { addProjectTask })(AddTaskModal);
+export default connect(mapStateToProps, {
+	addProjectTask,
+	addProjectTaskForDemo
+})(AddTaskModal);

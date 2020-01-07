@@ -5,9 +5,11 @@ import PropTypes from 'prop-types';
 import Backlog from './Backlog';
 import {
 	getBacklog,
-	getBacklogForDemo,
 	updateProjectTask,
-	deleteProjectTask
+	deleteProjectTask,
+	getBacklogForDemo,
+	updateProjectTaskForDemo,
+	deleteProjectTaskForDemo
 } from '../../actions/backlogActions';
 import AddTaskModal from './ProjectTasks/AddTaskModal';
 import UpdateTaskModal from './ProjectTasks/UpdateTaskModal';
@@ -73,20 +75,32 @@ class ProjectBoard extends Component {
 		this.setState({ selectedProjectId: id });
 	};
 
+	onUpdateCallback = updatedProjectTask => {
+		if (!this.props.isDemo) {
+			this.props.updateProjectTask(updatedProjectTask);
+		} else {
+			this.props.updateProjectTaskForDemo(updatedProjectTask);
+		}
+	};
+
 	onDeleteCallback = () => {
 		const { projectTasks } = this.props.backlog;
 		const selectedProject = projectTasks.find(
 			proj => proj.id === this.state.selectedProjectId
 		);
-		this.props.deleteProjectTask(
-			selectedProject.projectIdentifier,
-			selectedProject.projectSequence
-		);
-		this.toggleDeleteModal();
-	};
 
-	onUpdateCallback = updatedProjectTask => {
-		this.props.updateProjectTask(updatedProjectTask);
+		if (!this.props.isDemo) {
+			this.props.deleteProjectTask(
+				selectedProject.projectIdentifier,
+				selectedProject.projectSequence
+			);
+		} else {
+			this.props.deleteProjectTaskForDemo(
+				selectedProject.projectIdentifier,
+				selectedProject.projectSequence
+			);
+		}
+		this.toggleDeleteModal();
 	};
 
 	onSetColumnCallback = columnName => {
@@ -141,6 +155,7 @@ class ProjectBoard extends Component {
 						show={this.state.showAddModal}
 						projectId={projId}
 						selectedColumn={this.state.selectedColumn}
+						isDemo={this.props.isDemo}
 					/>
 					<UpdateTaskModal
 						onClose={this.toggleUpdateModal}
@@ -180,7 +195,9 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
 	getBacklog,
-	getBacklogForDemo,
 	updateProjectTask,
-	deleteProjectTask
+	deleteProjectTask,
+	getBacklogForDemo,
+	updateProjectTaskForDemo,
+	deleteProjectTaskForDemo
 })(ProjectBoard);
