@@ -87,8 +87,7 @@ const data = {
 		{
 			id: 64,
 			projectSequence: 'TDEV-8',
-			summary:
-				'Implement Temporary Modals for Add/Edit/Delete of Projects and Tasks',
+			summary: 'Implement Modals for Add/Edit/Delete of Projects and Tasks',
 			acceptanceCriteria: '',
 			status: 'DONE',
 			priority: 3,
@@ -208,9 +207,9 @@ const data = {
 		{
 			id: 74,
 			projectSequence: 'TDEV-18',
-			summary: 'Add Scrollbar to List when height reaches 100%',
+			summary: 'Add Scrollbar to list when height reaches max-height',
 			acceptanceCriteria: '',
-			status: 'IN_PROGRESS',
+			status: 'DONE',
 			priority: 3,
 			dueDate: '2020-01-07',
 			projectIdentifier: 'TDEV',
