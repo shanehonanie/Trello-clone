@@ -26,6 +26,9 @@ const TaskList = styled.div`
 	background-color: #ebecf0;
 	flex-grow: 1;
 	min-height: 8.5em;
+	max-height: 80vh;
+	overflow-y: auto;
+	overflow-x: hidden;
 `;
 
 const AddTaskContainer = styled.div`
