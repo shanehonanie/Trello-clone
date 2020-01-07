@@ -29,3 +29,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+// Build Folder for Client
+src/main/ppmtool-react-client
