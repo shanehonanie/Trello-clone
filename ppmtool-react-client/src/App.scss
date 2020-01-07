@@ -84,6 +84,10 @@ html {
 		background-image: url(https://a.trellocdn.com/prgb/dist/images/header-logo-2x.01ef898….png);
 	}
 
+	a {
+		text-decoration: none;
+	}
+
 	.nav-links {
 		display: flex;
 		align-items: center;
@@ -427,6 +431,10 @@ a {
 		}
 	}
 }
+
+// Parent div for column - Unused for now
+// .column-parent {
+// }
 
 // Components
 .card-2 {
