@@ -35,12 +35,15 @@ class DeleteProjectModal extends Component {
 						</h5>
 						<div className='row justify-content-center mt-4'>
 							<button
-								className='btn btn-primary mr-3 btn-lg'
+								className='btn btn-danger mr-3 btn-lg'
 								onClick={this.onDelete}
 							>
 								Delete
 							</button>
-							<button className='btn btn-danger btn-lg' onClick={this.onClose}>
+							<button
+								className='btn btn-secondary btn-lg'
+								onClick={this.onClose}
+							>
 								Close
 							</button>
 						</div>
