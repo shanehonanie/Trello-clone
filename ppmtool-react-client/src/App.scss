@@ -388,17 +388,17 @@ a {
 	&__content {
 		// TODO : Create Mixin for abs center
 		position: absolute;
-		top: 50%;
+		top: 30%;
 		left: 50%;
 		transform: translate(-50%, -50%);
 
 		width: 30%;
-		height: 50rem;
+		padding-bottom: 3rem;
 		color: var(white);
 		box-shadow: 0 2rem 4rem rgba(black, 0.2);
 		background-color: var(--color-grey-light-1);
 		border-radius: 10px;
-		z-index: 91001;
+		z-index: 1001;
 		// opacity: 0;
 		// transform: scale(0.5);
 
