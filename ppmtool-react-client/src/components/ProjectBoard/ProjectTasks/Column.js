@@ -25,8 +25,8 @@ const TaskList = styled.div`
 	// background-color: ${props => (props.isDraggingOver ? 'skyblue' : '#ebecf0')};
 	background-color: #ebecf0;
 	flex-grow: 1;
-	min-height: 8.5em;
-	max-height: 80vh;
+	min-height: 20px;
+	max-height: 70vh;
 	overflow-y: auto;
 	overflow-x: hidden;
 `;
