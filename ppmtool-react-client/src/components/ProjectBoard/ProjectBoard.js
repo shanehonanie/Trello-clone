@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -110,6 +110,23 @@ class ProjectBoard extends Component {
 	render() {
 		const { projectTasks } = this.props.backlog;
 		const { errors } = this.state;
+		const alertIfDemo = (
+			<div class='alert alert-warning alert-dismissible fade show' role='alert'>
+				<strong>This is a demo!</strong> Changes to this demo will persist in
+				the React-Redux state but will not be sent to the server/database. This
+				means once you reload the page, the data goes back to the initial state.
+				If you create an account you can save changes to server/database and
+				create additional project boards.
+				<button
+					type='button'
+					class='close'
+					data-dismiss='alert'
+					aria-label='Close'
+				>
+					<span aria-hidden='true'>&times;</span>
+				</button>
+			</div>
+		);
 
 		let boardContent;
 
@@ -132,15 +149,18 @@ class ProjectBoard extends Component {
 			}
 
 			return (
-				<Backlog
-					projectTasks={projectTasks}
-					setIdCallback={this.setSelectedProject}
-					toggleAddModalCallback={this.toggleAddModal}
-					toggleEditModalCallback={this.toggleUpdateModal}
-					toggleDeleteModalCallback={this.toggleDeleteModal}
-					onUpdateTaskCallback={this.onUpdateCallback}
-					selectedColumnCallback={this.onSetColumnCallback}
-				/>
+				<Fragment>
+					{this.props.isDemo ? alertIfDemo : null}
+					<Backlog
+						projectTasks={projectTasks}
+						setIdCallback={this.setSelectedProject}
+						toggleAddModalCallback={this.toggleAddModal}
+						toggleEditModalCallback={this.toggleUpdateModal}
+						toggleDeleteModalCallback={this.toggleDeleteModal}
+						onUpdateTaskCallback={this.onUpdateCallback}
+						selectedColumnCallback={this.onSetColumnCallback}
+					/>
+				</Fragment>
 			);
 		};
 
