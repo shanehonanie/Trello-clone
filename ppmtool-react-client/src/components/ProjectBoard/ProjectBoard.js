@@ -111,7 +111,10 @@ class ProjectBoard extends Component {
 		const { projectTasks } = this.props.backlog;
 		const { errors } = this.state;
 		const alertIfDemo = (
-			<div class='alert alert-warning alert-dismissible fade show' role='alert'>
+			<div
+				className='alert alert-warning alert-dismissible fade show'
+				role='alert'
+			>
 				<strong>This is a demo!</strong> Changes to this demo will persist in
 				the React-Redux state but will not be sent to the server/database. This
 				means once you reload the page, the data goes back to the initial state.
@@ -119,7 +122,7 @@ class ProjectBoard extends Component {
 				create additional project boards.
 				<button
 					type='button'
-					class='close'
+					className='close'
 					data-dismiss='alert'
 					aria-label='Close'
 				>
