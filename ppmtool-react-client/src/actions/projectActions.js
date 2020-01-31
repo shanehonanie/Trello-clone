@@ -10,7 +10,7 @@ import {
 } from './types';
 
 export const getProjects = () => async dispatch => {
-	const res = await axios.get('/api/project/all');
+	const res = await axios.get('/trelloclone/api/project/all');
 	dispatch({
 		type: GET_PROJECTS,
 		payload: res.data
@@ -79,7 +79,7 @@ export const updateProject = project => async dispatch => {
 
 export const deleteProject = project => async dispatch => {
 	try {
-		await axios.delete(`/api/project/${project.projectIdentifier}`);
+		await axios.delete(`/trelloclone/api/project/${project.projectIdentifier}`);
 
 		dispatch({
 			type: DELETE_PROJECT,

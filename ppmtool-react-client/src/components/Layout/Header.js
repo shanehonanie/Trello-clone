@@ -8,7 +8,7 @@ import { setProject } from '../../actions/projectActions';
 class Header extends Component {
 	onLogout = () => {
 		this.props.logout();
-		window.location.href = '/';
+		window.location.href = '/trelloclone/';
 	};
 
 	onClickProjectLink = p => {
@@ -20,7 +20,7 @@ class Header extends Component {
 
 		const userIsNotAuthenticated = (
 			<header className='header'>
-				<Link to='/'>
+				<Link to='/trelloclone/'>
 					<h2 className='header__title'>Trello Clone</h2>
 				</Link>
 				<div className='nav-links'>

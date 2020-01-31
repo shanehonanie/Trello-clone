@@ -13,7 +13,7 @@ import demoData from '../components/ProjectBoard/ProjectTasks/demo-data';
 
 export const getBacklog = backlogId => async dispatch => {
 	try {
-		const res = await axios.get(`/api/backlog/${backlogId}`);
+		const res = await axios.get(`/trelloclone/api/backlog/${backlogId}`);
 		dispatch({
 			type: GET_BACKLOG,
 			payload: res.data
@@ -69,7 +69,10 @@ export const clearBacklog = () => async dispatch => {
 
 export const addProjectTask = (backlogId, projectTask) => async dispatch => {
 	try {
-		const res = await axios.post(`/api/backlog/${backlogId}`, projectTask);
+		const res = await axios.post(
+			`/trelloclone/api/backlog/${backlogId}`,
+			projectTask
+		);
 		// console.log('backlogActions.js addProjectTask projectTask', projectTask);
 		// console.log('backlogActions.js addProjectTask res.data', res.data);
 		dispatch({
@@ -110,7 +113,7 @@ export const addProjectTaskForDemo = (
 export const updateProjectTask = projectTask => async dispatch => {
 	try {
 		const res = await axios.patch(
-			`/api/backlog/${projectTask.projectIdentifier}/${projectTask.projectSequence}`,
+			`/trelloclone/api/backlog/${projectTask.projectIdentifier}/${projectTask.projectSequence}`,
 			projectTask
 		);
 		// console.log('backlogActions.js updateProjectTask projectTask', projectTask);
@@ -147,7 +150,7 @@ export const deleteProjectTask = (backlogId, ptId) => async dispatch => {
 	try {
 		// console.log('backlogActions.js deleteProjectTask backlogId', backlogId);
 		// console.log('backlogActions.js deleteProjectTask ptId', ptId);
-		await axios.delete(`/api/backlog/${backlogId}/${ptId}`);
+		await axios.delete(`/trelloclone/api/backlog/${backlogId}/${ptId}`);
 		dispatch({
 			type: DELETE_PROJECT_TASK,
 			payload: ptId
@@ -164,7 +167,7 @@ export const deleteProjectTaskForDemo = (backlogId, ptId) => async dispatch => {
 	try {
 		// console.log('backlogActions.js deleteProjectTask backlogId', backlogId);
 		// console.log('backlogActions.js deleteProjectTask ptId', ptId);
-		// await axios.delete(`/api/backlog/${backlogId}/${ptId}`);
+		// await axios.delete(`/trelloclone/api/backlog/${backlogId}/${ptId}`);
 		dispatch({
 			type: DELETE_PROJECT_TASK,
 			payload: ptId
