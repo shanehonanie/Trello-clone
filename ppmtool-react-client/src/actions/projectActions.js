@@ -46,7 +46,7 @@ export const clearProject = () => async dispatch => {
 
 export const createProject = project => async dispatch => {
 	try {
-		const res = await axios.post('/api/project', project);
+		const res = await axios.post('/trelloclone/api/project', project);
 		dispatch({
 			type: ADD_PROJECT,
 			payload: res.data
@@ -62,7 +62,7 @@ export const createProject = project => async dispatch => {
 export const updateProject = project => async dispatch => {
 	try {
 		// TODO: Create an Update route instead of using create route
-		const res = await axios.post('/api/project', project);
+		const res = await axios.post('/trelloclone/api/project', project);
 		console.log('res.data', res.data);
 		dispatch({
 			type: UPDATE_PROJECT,
